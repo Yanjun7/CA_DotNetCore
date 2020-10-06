@@ -6,23 +6,25 @@ using System.Threading.Tasks;
 
 namespace CA1.Models
 {
-    public class ShoppingCartDetail
+    public class Product
     {
         [MaxLength(50)]
         public string Id { get; set; }
 
         [Required]
         [MaxLength(50)]
-        public string UserId { get; set; }
+        public string ProductName { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string ProductId { get; set; }
+        public double Price { get; set; }
 
         [Required]
-        public int Quantity { get; set; }
+        [MaxLength(128)]
+        public string PhotoLink { get; set; }
 
-        public virtual User User { get; set; }
-        public virtual Product Product { get; set; }
+        [Required]
+        [MaxLength(500)]
+        public string PhotoTag { get; set; }
+
     }
 }
