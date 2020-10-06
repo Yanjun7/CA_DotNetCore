@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CA1.Models;
+using CA1.Database;
 
 namespace CA1.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DbGallery db;
+        public HomeController(DbGallery db)
+        {
+            this.db = db;
+        }
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -69,9 +75,19 @@ namespace CA1.Controllers
 
         }
 
-        public IActionResult Privacy()
+        public IActionResult Search(string userInput)
         {
-            return View();
+            List<Product> products = db.Products.Where(
+                    x => x.Description.Contains(userInput) &&
+                    x.ProductName.Contains(userInput)).ToList();
+            ViewData["products"] = products;
+
+            Session session = db.Sessions.FirstOrDefault(x =>
+                x.UserId == HttpContext.Request.Cookies["sessionId"]);
+            ViewData["sessionId"] = Request.Cookies["sessionId"];
+
+            return View("SearchResults");
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
