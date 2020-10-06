@@ -1,13 +1,20 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
     string[] images = (string[])ViewData["images"];
-    string[] tags = (string[])ViewData["tags"];
+    string[] names = (string[])ViewData["names"];
+    string[] informations = (string[])ViewData["informations"];
 }
 
 <style>
+    body {
+        font-family: Comic Sans MS;
+    }
     table {
         width: 100%;
         margin: auto;
+    }
+    td{
+        width:400px;
     }
 
     .badge {
@@ -27,11 +34,12 @@
         position: relative;
     }
 
-    .badge_container {
-        position: absolute;
-        left: 10px;
-        bottom: 10px;
-        opacity: 0.7;
+    .name {
+        
+        text-align:center
+    }
+    .information{
+
     }
 </style>
 
@@ -40,34 +48,72 @@
     {
         int j;
 
-    <tr>
-        @for (j = 0; j < 3 && i + j < images.Length; j++)
+        <tr>
+            @for (j = 0; j < 3 && i + j < images.Length; j++)
             {
-        <td>
-            @{
+                <td>
+                    @{
                         string url = ViewData["url_prefix"] +
                             images[i + j];
 
-                        string[] atag = tags[i + j].Split(",");
-            }
-            <div class="img_container">
-                <img src=@url width="350" height="235" />
 
-                <div class="badge_container">
-                    @for (int k = 0; k < atag.Length; k++)
-                            {
-                    <span class="badge badge-pill badge-dark">@atag[k]</span>
-                            }
-                </div>
-            </div>
-        </td>
-            }
+                    }
+                    <div class="img_container">
+                        <img src=@url width="350" height="235" />
 
-        @for (; j < 3; j++)
+
+                    </div>
+                </td>
+            }
+            @for (; j < 3; j++)
             {
-        <td></td>
+                <td></td>
             }
-    </tr>
+        </tr>
+        @*------------------------------------------------------------------------------------*@
+
+        <tr>
+            @for (j = 0; j < 3 && i + j < images.Length; j++)
+            {
+
+                <th class="name">
+                    @{
+                        string name = names[i + j];
+                        
+                            @name
+                        
+                    }
+                </th>
+
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
+        @*------------------------------------------------------------------------------------*@
+        <tr>
+            @for (j = 0; j < 3 && i + j < images.Length; j++)
+            {
+
+                <td >
+                    @{
+                        string information = informations[i + j];
+                        
+                            @information
+                        
+                    }
+                </td>
+
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
+        @*------------------------------------------------------------------------------------*@
+
+
     }
 </table>
 

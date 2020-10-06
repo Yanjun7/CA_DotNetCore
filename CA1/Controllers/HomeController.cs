@@ -29,19 +29,28 @@ namespace CA1.Controllers
                 "https%3A%2F%2Fcynapse.com%2Fimg%2FNumerics-Home-Banner.png?w=350&s=c8fb7768c86c3fd11ae59420f71589cb",
             };
 
-            string[] tags =
+            string[] name =
             {
-                "desktop, office, window",
-                "office space, decor",
-                "office, table",
-                "living, interior design",
-                "open office, hot desking",
-                "chill, window, sofa",
-                "programmers, coding"
+                ".NET Charts",
+                ".NET Paypal",
+                ".NET ML",
+                ".NET Analytics",
+                ".NET Logger",
+                ".NET Numerics",
+            };
+            string[] information =
+            {
+                "Brings powerful charting capabilities to your .NET applications.",
+                "Integrate your .NET apps with paypal the easy way!",
+                "Supercharged .NET machine learning libraries.",
+                "Performs data mining and analytics easily in .NET.",
+                "Logs and aggregates events easily in your .NET apps.",
+                "Powerful numerical methods for your .NET simulations.",
             };
 
             ViewData["images"] = imgs;
-            ViewData["tags"] = tags;
+            ViewData["names"] = name;
+            ViewData["informations"] = information;
             ViewData["url_prefix"] = "https://nus-sa51-team9.imgix.net/";
             ViewData["Is_Home"] = "menu_hilite";
 
