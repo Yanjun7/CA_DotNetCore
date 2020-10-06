@@ -3,15 +3,17 @@
     string[] images = (string[])ViewData["images"];
     string[] names = (string[])ViewData["names"];
     string[] informations = (string[])ViewData["informations"];
+    string[] prices = (string[])ViewData["prices"];
 }
 
 <style>
-    body {
+    /*body {
         font-family: Comic Sans MS;
-    }
+    }*/
     table {
         width: 100%;
         margin: auto;
+        font-family: Comic Sans MS;
     }
     td{
         width:400px;
@@ -38,8 +40,9 @@
         
         text-align:center
     }
-    .information{
-
+    .button {
+        background-color: #D3CCCC;
+        
     }
 </style>
 
@@ -55,8 +58,6 @@
                     @{
                         string url = ViewData["url_prefix"] +
                             images[i + j];
-
-
                     }
                     <div class="img_container">
                         <img src=@url width="350" height="235" />
@@ -79,9 +80,9 @@
                 <th class="name">
                     @{
                         string name = names[i + j];
-                        
-                            @name
-                        
+
+                        @name
+
                     }
                 </th>
 
@@ -96,12 +97,12 @@
             @for (j = 0; j < 3 && i + j < images.Length; j++)
             {
 
-                <td >
+                <td>
                     @{
                         string information = informations[i + j];
-                        
-                            @information
-                        
+
+                        @information
+
                     }
                 </td>
 
@@ -112,6 +113,25 @@
             }
         </tr>
         @*------------------------------------------------------------------------------------*@
+        <tr>
+            @for (j = 0; j < 3 && i + j < images.Length; j++)
+            {
+
+            <td class="name" >
+                @{
+                    string price = prices[i + j] + "-" + "Add" + " " + "To" + " " + "Cart";
+                }
+
+                <button class="button">@price</button>
+
+            </td>
+
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
 
 
     }

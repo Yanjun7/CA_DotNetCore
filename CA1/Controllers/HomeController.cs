@@ -47,11 +47,22 @@ namespace CA1.Controllers
                 "Logs and aggregates events easily in your .NET apps.",
                 "Powerful numerical methods for your .NET simulations.",
             };
+            string[] Price =
+           {
+                "$99",
+                "$69",
+                "$299",
+                "$299",
+                "$49",
+                "$199",
+            };
 
             ViewData["images"] = imgs;
             ViewData["names"] = name;
             ViewData["informations"] = information;
+            ViewData["prices"] = Price;
             ViewData["url_prefix"] = "https://nus-sa51-team9.imgix.net/";
+            ViewData["after_price"] = "Add To Cart";
             ViewData["Is_Home"] = "menu_hilite";
 
             return View();
