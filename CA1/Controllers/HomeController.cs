@@ -20,6 +20,7 @@ namespace CA1.Controllers
 
         public IActionResult Index()
         {
+            ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
             return View();
         }
 
