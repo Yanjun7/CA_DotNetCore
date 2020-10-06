@@ -51,7 +51,7 @@ namespace CA1
             });
 
             //!!!WARNING!!!: This is used to delete the DB if you want a clean slate
-            //db.Database.EnsureDeleted();
+            db.Database.EnsureDeleted();
 
             //this makes sure that the Db is create and available on your machine/server
             db.Database.EnsureCreated();

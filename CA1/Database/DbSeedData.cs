@@ -19,7 +19,7 @@ namespace CA1.Database
         public void Init()
         {
             AddUsers();
-
+            AddProducts("/SeedData/product.data");
         }
 
         public void AddUsers()
@@ -43,8 +43,21 @@ namespace CA1.Database
             string[] lines = File.ReadAllLines(filename);
             foreach(string line in lines)
             {
-
+                string[] pair = line.Split(";");
+                if (pair.Length == 5)
+                {
+                    db.Products.Add(new Product
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        PhotoLink = pair[0],
+                        ProductName = pair[1],
+                        Price = Convert.ToDouble(pair[2]),
+                        Description = pair[3],
+                        PhotoTag = pair[4]
+                    });
+                }
             }
+            db.SaveChanges();
         }
     }
 }
