@@ -42,11 +42,26 @@
     }
     .button {
         background-color: #D3CCCC;
-        
+    }
+    .search {
+        text-align: right
     }
 </style>
 
 <table>
+    <tr>
+        <td colspan="3">
+            <div class="search">
+                <form action=" " method="post">
+                    <input type="text" placeholder="Enter your search here..." id="search" name="search" />
+                    <input type="submit" value="Search" />
+                </form>
+            </div>
+        </td>
+    </tr>
+
+
+
     @for (int i = 0; i < images.Length; i += 3)
     {
         int j;
