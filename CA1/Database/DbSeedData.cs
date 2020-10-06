@@ -19,7 +19,7 @@ namespace CA1.Database
         public void Init()
         {
             AddUsers();
-            AddProducts("/SeedData/product.data");
+            AddProducts("SeedData/product.data");
         }
 
         public void AddUsers()

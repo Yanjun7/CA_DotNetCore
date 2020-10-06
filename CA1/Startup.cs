@@ -56,8 +56,7 @@ namespace CA1
             //this makes sure that the Db is create and available on your machine/server
             db.Database.EnsureCreated();
 
-
-            //new DbSeedData(db).Init();
+            new DbSeedData(db).Init();
         }
     }
 }
