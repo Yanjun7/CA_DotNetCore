@@ -1,8 +1,139 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    string[] images = (string[])ViewData["images"];
+    string[] names = (string[])ViewData["names"];
+    string[] informations = (string[])ViewData["informations"];
+    string[] prices = (string[])ViewData["prices"];
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<style>
+    /*body {
+        font-family: Comic Sans MS;
+    }*/
+    table {
+        width: 100%;
+        margin: auto;
+        font-family: Comic Sans MS;
+    }
+    td{
+        width:400px;
+    }
+
+    .badge {
+        font-size: 14px !important;
+    }
+
+    .like_icon {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 5px;
+        right: 30px;
+        cursor: pointer;
+    }
+
+    .img_container {
+        position: relative;
+    }
+
+    .name {
+        
+        text-align:center
+    }
+    .button {
+        background-color: #D3CCCC;
+        
+    }
+</style>
+
+<table>
+    @for (int i = 0; i < images.Length; i += 3)
+    {
+        int j;
+
+        <tr>
+            @for (j = 0; j < 3 && i + j < images.Length; j++)
+            {
+                <td>
+                    @{
+                        string url = ViewData["url_prefix"] +
+                            images[i + j];
+                    }
+                    <div class="img_container">
+                        <img src=@url width="350" height="235" />
+
+
+                    </div>
+                </td>
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
+        @*------------------------------------------------------------------------------------*@
+
+        <tr>
+            @for (j = 0; j < 3 && i + j < images.Length; j++)
+            {
+
+                <th class="name">
+                    @{
+                        string name = names[i + j];
+
+                        @name
+
+                    }
+                </th>
+
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
+        @*------------------------------------------------------------------------------------*@
+        <tr>
+            @for (j = 0; j < 3 && i + j < images.Length; j++)
+            {
+
+                <td>
+                    @{
+                        string information = informations[i + j];
+
+                        @information
+
+                    }
+                </td>
+
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
+        @*------------------------------------------------------------------------------------*@
+        <tr>
+            @for (j = 0; j < 3 && i + j < images.Length; j++)
+            {
+
+            <td class="name" >
+                @{
+                    string price = prices[i + j] + "-" + "Add" + " " + "To" + " " + "Cart";
+                }
+
+                <button class="button">@price</button>
+
+            </td>
+
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
+
+
+    }
+</table>
+
