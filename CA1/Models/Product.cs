@@ -21,10 +21,13 @@ namespace CA1.Models
         [Required]
         [MaxLength(128)]
         public string PhotoLink { get; set; }
-
+        
         [Required]
         [MaxLength(500)]
         public string PhotoTag { get; set; }
 
+        [Required]
+        [MaxLength(1000)]
+        public string Description { get; set; }
     }
 }
