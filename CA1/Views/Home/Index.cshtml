@@ -3,7 +3,7 @@
     string[] images = (string[])ViewData["images"];
     string[] names = (string[])ViewData["names"];
     string[] informations = (string[])ViewData["informations"];
-    string[] prices = (string[])ViewData["prices"];
+    double[] prices = (double[])ViewData["prices"];
 }
 
 <style>
@@ -71,8 +71,7 @@
             {
                 <td>
                     @{
-                        string url = ViewData["url_prefix"] +
-                            images[i + j];
+                        string url =images[i + j];
                     }
                     <div class="img_container">
                         <img src=@url width="350" height="235" />

@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace CA1.Models
 {
-    public class Order
+    public class Session
     {
-        [MaxLength(50)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
+
+        [Required]
+        public long Timestamp { get; set; }
 
         [Required]
         [MaxLength(50)]
         public string UserId { get; set; }
-
-        [Required]
-        public DateTime TransactionDate { get; set; }
 
         public virtual User User { get; set; }
     }
