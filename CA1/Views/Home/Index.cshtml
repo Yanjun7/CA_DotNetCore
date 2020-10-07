@@ -5,6 +5,10 @@
     string[] informations = (string[])ViewData["informations"];
     double[] prices = (double[])ViewData["prices"];
 }
+@section Scripts
+{
+    <script src="~/js/product/search.js"></script>
+}
 
 <style>
     /*body {
@@ -51,16 +55,16 @@
 </style>
 
 <table>
-    <tr>
+   @* <tr>
         <td colspan="3">
             <div class="search">
-                <form action=" " method="post">
-                    <input type="text" placeholder="Enter your search here..." id="search" name="search" />
-                    <input type="submit" value="Search" />
+                <form id="searchform" action="/Home/Search" method="post">
+                    <input id="searchBar" type="text" placeholder="Enter your search here..." name="search" />
+                    <input id="searchBtn" type="submit" value="Search" />
                 </form>
             </div>
         </td>
-    </tr>
+    </tr>*@
 
 
 

@@ -7,18 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CA1.Models;
 using CA1.Database;
-using Microsoft.VisualBasic;
 
 namespace CA1.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DbGallery db;
 
+        private readonly DbGallery db;
         public HomeController(DbGallery db)
         {
             this.db = db;
         }
+
+      
         public IActionResult Index()
         {
             List<Product> products = db.Products.ToList();
@@ -27,7 +28,7 @@ namespace CA1.Controllers
             string[] tags = new string[products.Count];
             string[] info = new string[products.Count];
             double[] prices = new double[products.Count];
-            for(int i = 0; i < products.Count; i++)
+            for (int i = 0; i < products.Count; i++)
             {
                 images[i] = products[i].PhotoLink;
                 names[i] = products[i].ProductName;
@@ -41,12 +42,34 @@ namespace CA1.Controllers
             ViewData["tags"] = tags;
             ViewData["informations"] = info;
             ViewData["prices"] = prices;
+          
             return View();
+      
+
         }
 
-        public IActionResult Privacy()
+        public IActionResult Search(string search)
         {
-            return View();
+            /* List<Product> products = db.Products.Where(
+                     x => x.Description.Contains(search) ||
+                     x.ProductName.Contains(search)).ToList();*/
+
+            /*  List<Product> products = db.Products.Where(
+                      x => x.ProductName==search).ToList();*/
+
+            List<Product> products = db.Products.Where(
+                   x => x.Description.ToUpper().Contains(search.ToUpper()) ||
+                   x.ProductName.ToUpper().Contains(search.ToUpper())).ToList();
+
+            ViewData["products"] = products;
+
+            Debug.WriteLine(products.Count);
+            Session session = db.Sessions.FirstOrDefault(x =>
+                x.UserId == HttpContext.Request.Cookies["sessionId"]);
+            ViewData["sessionId"] = Request.Cookies["sessionId"];
+
+            return View("SearchResults");
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
