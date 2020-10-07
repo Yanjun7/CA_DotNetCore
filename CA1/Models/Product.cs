@@ -19,7 +19,7 @@ namespace CA1.Models
         public double Price { get; set; }
 
         [Required]
-        [MaxLength(128)]
+        [MaxLength(500)]
         public string PhotoLink { get; set; }
         
         [Required]
