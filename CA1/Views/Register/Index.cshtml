@@ -1,11 +1,12 @@
-﻿
-@{
-    ViewData["Title"] = "Login";
+﻿@{
+    ViewData["title"] = "Register";
+    ViewData["temp"] = "testing";
+    
 }
 
 @section Scripts
 {
-    <script src="~/js/Login/index.js"></script>
+    <script src="~/js/Register/index.js"></script>
 }
 
 <style>
@@ -18,14 +19,14 @@
 
 <p></p>
 
-<form id="form" action="/Login/Authenticate" method="post">
+<form id="form" action="/Register/TEMP" method="post">
     <table align="center">
         <tr>
             <td>
-                Username:
+                New Username:
             </td>
             <td>
-                <input id="username" name="username"
+                <input id="newUsername" name="newUsername"
                        class="form-control" />
             </td>
         </tr>
@@ -34,10 +35,20 @@
                 Password:
             </td>
             <td>
-                <input id="password" name="password"
+                <input id="newPassword1" name="newPassword1"
                        type="password" class="form-control" />
             </td>
         </tr>
+        <tr>
+            <td>
+                Confirm:
+            </td>
+            <td>
+                <input id="newPassword2" name="newPassword2"
+                       type="password" class="form-control" />
+            </td>
+        </tr>
+
         <tr>
             <td colspan="2" align="right">
                 <input id="submitBtn" type="submit" class="btn btn-success" />
@@ -50,4 +61,3 @@
         </tr>
     </table>
 </form>
-
