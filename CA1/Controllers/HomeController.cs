@@ -50,18 +50,13 @@ namespace CA1.Controllers
 
         public IActionResult Search(string search)
         {
-            /* List<Product> products = db.Products.Where(
-                     x => x.Description.Contains(search) ||
-                     x.ProductName.Contains(search)).ToList();*/
-
-            /*  List<Product> products = db.Products.Where(
-                      x => x.ProductName==search).ToList();*/
 
             List<Product> products = db.Products.Where(
                    x => x.Description.ToUpper().Contains(search.ToUpper()) ||
                    x.ProductName.ToUpper().Contains(search.ToUpper())).ToList();
 
             ViewData["products"] = products;
+            ViewData["userInput"] = search;
 
             Debug.WriteLine(products.Count);
             Session session = db.Sessions.FirstOrDefault(x =>
