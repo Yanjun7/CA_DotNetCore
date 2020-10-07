@@ -1,85 +1,83 @@
 ﻿<link rel="stylesheet" href="~/css/Backstyle.css" />
+@{ 
+    bool count = (bool)ViewData["count"];
 
+    string[] images = (string[])ViewData["images"];
+    string[] names = (string[])ViewData["names"];
+    string[] informations = (string[])ViewData["informations"];
+    double[] prices = (double[])ViewData["prices"];
+    int[] quentity = (int[])ViewData["quantity"];
+
+}
 <div id='t-warp'>
     <br />
-    <h1>Review your bag.</h1>
-    <p><b>Free delivery and free returns.</b></p>
-    <HR />
-    <table>
-        <tr>
-            <td width="200" rowspan="2"><img SRC=" " height="100" width="175"></td>
-            <th>13-inch MacBook Air - Space Gray&emsp; &emsp; &emsp; &emsp;&emsp;1&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $999.00</th>
-        </tr>
-        <tr><td align=right><a href='#'>Remove</a></td></tr>
-    </table>
-    <div id='t-warp2'>
+    @if (count == false)
+    {
+        <h1>Your bag is empty.</h1>
         <HR />
-    </div>
-    <table>
-        <tr>
-            <td width="200" rowspan="2"></td>
-            <th>Add AppleCare+ for MacBook/MacBook Air for $249.00 &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a href='#'>Add</a></th>
-        </tr>
-        <tr><td><a href='#'>Learn more</a></td></tr>
-    </table>
-    <div id='t-warp2'>
-        <HR />
-    </div>
-    <table>
-        <tr>
-            <td width="200" rowspan="2"></td>
-            <th>Add a gift message &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a href='#'>Add</a></th>
-        </tr>
-    </table>
-    <br /><br /><br />
-    <HR />
-    <table>
-        <tr>
-            <td width="200" rowspan="2"><img SRC=" " height="150" width="150"></td>
-            <th>13-inch MacBook Pro - Space Gray&emsp; &emsp; &emsp; &emsp;&emsp;1&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $1,299.00</th>
-        </tr>
-        <tr><td align=right><a href='#'>Remove</a></td></tr>
-    </table>
-    <div id='t-warp2'>
-        <HR />
-    </div>
-    <table>
-        <tr>
-            <td width="200" rowspan="2"></td>
-            <th>Add AppleCare+ for MacBook/MacBook Air for $249.00 &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a href='#'>Add</a></th>
-        </tr>
-        <tr><td><a href='#'>Learn more</a></td></tr>
-    </table>
-    <div id='t-warp2'>
-        <HR />
-    </div>
-    <table>
-        <tr>
-            <td width="200" rowspan="2"></td>
-            <th>Add a gift message &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a href='#'>Add</a></th>
-        </tr>
-    </table>
-    <br /><br /><br />
-    <HR />
-    <table>
-        <tr>
-            <td width="200" rowspan="2"></td>
-            <td>Subtotal &emsp; &emsp;&emsp;&emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$2,298.00</td>
-        </tr>
-        <tr><td>Shipping&emsp; &emsp;&emsp;&emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;FREE</td>
-    </table>
-    <div id='t-warp2'>
-        <HR />
-    </div>
-    <table>
-        <tr>
-            <td width="200" rowspan="2"></td>
-            <th>Total &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $2,298.00</th>
-        </tr>
-    </table>
-    <br /><br />
-    <div id='t-warp3'>
-        <button class="button1"><b>Check Out</b></button>
-    </div>
+    }
+    else
+    {
+        {
+            
+        }
 
+        <h1>Review your bag.</h1>
+        <p><b>Free delivery and free returns.</b></p>
+        @for(int i = 0; i < names.Length; i ++)
+        {
+        <HR />
+        <table>
+            <tr>
+
+                <td width="200" rowspan="2"><img SRC=@images[i]  height="100" width="175"></td>
+                <th>@names[i] &emsp; &emsp; &emsp; &emsp;&emsp;@quentity[i] &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; @prices[i]</th>
+            </tr>
+            <tr><td align=right><button>Remove</button></td></tr>
+        </table>
+        <div id='t-warp2'>
+            <HR />
+        </div>
+        <table>
+            <tr>
+                <td width="200" rowspan="2"></td>
+                <th>Add AppleCare+ for MacBook/MacBook Air for $249.00 &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a href='#'>Add</a></th>
+            </tr>
+            <tr><td><a href='#'>Learn more</a></td></tr>
+        </table>
+        <div id='t-warp2'>
+            <HR />
+        </div>
+        <table>
+            <tr>
+                <td width="200" rowspan="2"></td>
+                <th>Add a gift message &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a href='#'>Add</a></th>
+            </tr>
+        </table>
+        <br /><br /><br />
+        }
+
+       
+        <HR />
+        <table>
+            <tr>
+                <td width="200" rowspan="2"></td>
+                <td>Subtotal &emsp; &emsp;&emsp;&emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$2,298.00</td>
+            </tr>
+            <tr><td>Shipping&emsp; &emsp;&emsp;&emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;FREE</td>
+        </table>
+        <div id='t-warp2'>
+            <HR />
+        </div>
+        <table>
+            <tr>
+                <td width="200" rowspan="2"></td>
+                <th>Total &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $2,298.00</th>
+            </tr>
+        </table>
+        <br /><br />
+        <div id='t-warp3'>
+            <button class="button1"><b>Check Out</b></button>
+        </div>
+    }
 </div>

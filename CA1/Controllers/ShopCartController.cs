@@ -22,7 +22,18 @@ namespace CA1.Controllers
         public IActionResult ShopCart()
         {
             List<ShoppingCartDetail> carts = db.ShoppingCart.ToList();
-            string[] productid = new string[carts.Count];
+            if(carts.Count==0)
+            {
+                bool count = false;
+                ViewData["count"] = count;
+                return View();
+            }
+            else
+            {
+                bool count = true;
+                ViewData["count"] = count;
+
+                string[] productid = new string[carts.Count];
             int[] quantity = new int[carts.Count];
             for (int i = 0; i < carts.Count; i++)
             {
@@ -70,10 +81,10 @@ namespace CA1.Controllers
             ViewData["names"] = Names;
             ViewData["informations"] = Info;
             ViewData["prices"] = Prices;
-
-
+            ViewData["quantity"] = quantity;
 
             return View();
+            }
         }
 
         public IActionResult Error()
