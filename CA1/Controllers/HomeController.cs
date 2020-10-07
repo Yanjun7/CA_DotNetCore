@@ -12,18 +12,14 @@ namespace CA1.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+
         private readonly DbGallery db;
         public HomeController(DbGallery db)
         {
             this.db = db;
         }
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
+      
         public IActionResult Index()
         {
             string[] imgs = {
@@ -75,13 +71,22 @@ namespace CA1.Controllers
 
         }
 
-        public IActionResult Search(string userInput)
+        public IActionResult Search(string search)
         {
+            /* List<Product> products = db.Products.Where(
+                     x => x.Description.Contains(search) ||
+                     x.ProductName.Contains(search)).ToList();*/
+
+            /*  List<Product> products = db.Products.Where(
+                      x => x.ProductName==search).ToList();*/
+
             List<Product> products = db.Products.Where(
-                    x => x.Description.Contains(userInput) &&
-                    x.ProductName.Contains(userInput)).ToList();
+                   x => x.Description.ToLower().Contains(search) ||
+                   x.ProductName.ToLower().Contains(search)).ToList();
+
             ViewData["products"] = products;
 
+            Debug.WriteLine(products.Count);
             Session session = db.Sessions.FirstOrDefault(x =>
                 x.UserId == HttpContext.Request.Cookies["sessionId"]);
             ViewData["sessionId"] = Request.Cookies["sessionId"];
