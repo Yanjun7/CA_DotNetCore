@@ -9,7 +9,8 @@
 
 function onAdd(event) {
 
-
+    let elem = event.currentTarget;
+    let productId = elem.getAttribute("producId");
 
 
     let xhr = new XMLHttpRequest();
@@ -33,5 +34,7 @@ function onAdd(event) {
     };
 
     // send productId
-    xhr.send(productId);
+    xhr.send(JSON.stringify({
+        ProductId: productId
+    }));
 }

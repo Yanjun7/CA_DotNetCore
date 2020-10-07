@@ -19,7 +19,7 @@ namespace CA1.Controllers
 
 
         //input  productId
-        public IActionResult Add([FromBody] string productId)
+        public IActionResult Add([FromBody] ProductObj productObj)
         {
             string sessionId = HttpContext.Request.Cookies["sessionId"];
             if (sessionId == null)
@@ -36,7 +36,7 @@ namespace CA1.Controllers
             {
                 Id = Guid.NewGuid().ToString(),
                 UserId = session.UserId,
-                ProductId = productId
+                ProductId = productObj.ProductId
             };
 
             db.ShoppingCart.Add(cart);

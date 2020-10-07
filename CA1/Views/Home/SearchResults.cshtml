@@ -83,7 +83,7 @@
                                     <td class="name">
                                         @{ string price = products[i + j].Price + "-" + "Add" + " " + "To" + " " + "Cart"; }
 
-                                        <button class="button">@price</button>
+                                        <button class="button" productId=@products[i+j]>@price</button>
 
                                     </td>}
                                                     @for (; j < 3; j++)
