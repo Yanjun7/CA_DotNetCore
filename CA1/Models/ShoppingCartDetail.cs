@@ -19,9 +19,6 @@ namespace CA1.Models
         [MaxLength(50)]
         public string ProductId { get; set; }
 
-        [Required]
-        public int Quantity { get; set; }
-
         public virtual User User { get; set; }
         public virtual Product Product { get; set; }
     }
