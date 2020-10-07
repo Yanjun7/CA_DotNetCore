@@ -11,25 +11,24 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CA1</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Team9</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                         <li>
                             <div class="search">
                                 <form id="searchform" action="/Home/Search" method="post">
                                     <input id="searchBar" type="text" placeholder="Enter your search here..." name="search" />
                                     <input id="searchBtn" type="submit" value="Search" />
                                 </form>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="shoppingcart" style="float:right">
+                                <img src="/img/shoppingcart.png" class="cart" width="30"/>
                             </div>
                         </li>
                     </ul>
