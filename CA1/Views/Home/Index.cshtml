@@ -4,6 +4,7 @@
     string[] names = (string[])ViewData["names"];
     string[] informations = (string[])ViewData["informations"];
     double[] prices = (double[])ViewData["prices"];
+    string[] productIds = (string[])ViewData["productIds"];
 }
 @section Scripts
 {
@@ -142,7 +143,7 @@
                         string price = prices[i + j] + "-" + "Add" + " " + "To" + " " + "Cart";
                     }
 
-                    <button class="button">@price</button>
+                    <button class="button" productId=@productIds[i+j]>@price</button>
 
                 </td>
 
