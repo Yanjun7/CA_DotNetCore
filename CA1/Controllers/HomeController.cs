@@ -41,7 +41,6 @@ namespace CA1.Controllers
             ViewData["tags"] = tags;
             ViewData["informations"] = info;
             ViewData["prices"] = prices;
-            ViewData[""]
             return View();
         }
 
