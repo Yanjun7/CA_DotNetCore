@@ -24,6 +24,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li>
+                            <div class="search">
+                                <form id="searchform" action="/Home/Search" method="post">
+                                    <input id="searchBar" type="text" placeholder="Enter your search here..." name="search" />
+                                    <input id="searchBtn" type="submit" value="Search" />
+                                </form>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -43,6 +51,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/product/search.js"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

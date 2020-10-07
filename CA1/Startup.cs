@@ -57,7 +57,7 @@ namespace CA1
             db.Database.EnsureCreated();
 
 
-            //new DbSeedData(db).Init();
+            new DbSeedData(db).Init();
         }
     }
 }

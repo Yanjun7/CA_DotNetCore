@@ -5,7 +5,7 @@
 
 	form.onsubmit = function ()
 	{
-		let searchElem = document.getElementById("search");
+		let searchElem = document.getElementById("searchBar");
 		console.log("Testing: search:" + searElem);
 		
 		let searchResult = searchElem.value.trim();
@@ -19,3 +19,6 @@
 	}
 }
     
+
+
+
