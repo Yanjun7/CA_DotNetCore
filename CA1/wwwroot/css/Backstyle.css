@@ -1,0 +1,34 @@
+﻿#t-warp {
+    margin: 0 auto;
+    width: 1000px
+}
+
+#t-warp2 {
+    margin: 0 0 0 180px;
+    width: 820px
+}
+
+#t-warp3 {
+    margin: 0 0 0 800px;
+    width: 200px
+}
+
+.button1 {
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    padding: 16px 64px;
+    text-align: center;
+    background-color: blue;
+    color: white;
+    border: 0px solid #4CAF50;
+    border-radius: 5px;
+}
+
+    .button1:hover {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+body {
+    font-family: San Francisco;
+}

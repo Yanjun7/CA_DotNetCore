@@ -4,10 +4,12 @@
     string[] names = (string[])ViewData["names"];
     string[] informations = (string[])ViewData["informations"];
     double[] prices = (double[])ViewData["prices"];
+    string[] productId = (string[])ViewData["productId"];
 }
 @section Scripts
 {
     <script src="~/js/product/search.js"></script>
+    <script src="~/js/shoppingcart/AddToCart.js"></script>
 }
 
 <style>
@@ -55,16 +57,16 @@
 </style>
 
 <table>
-   @* <tr>
-        <td colspan="3">
-            <div class="search">
-                <form id="searchform" action="/Home/Search" method="post">
-                    <input id="searchBar" type="text" placeholder="Enter your search here..." name="search" />
-                    <input id="searchBtn" type="submit" value="Search" />
-                </form>
-            </div>
-        </td>
-    </tr>*@
+    @* <tr>
+            <td colspan="3">
+                <div class="search">
+                    <form id="searchform" action="/Home/Search" method="post">
+                        <input id="searchBar" type="text" placeholder="Enter your search here..." name="search" />
+                        <input id="searchBtn" type="submit" value="Search" />
+                    </form>
+                </div>
+            </td>
+        </tr>*@
 
 
 
@@ -142,7 +144,7 @@
                         string price = prices[i + j] + "-" + "Add" + " " + "To" + " " + "Cart";
                     }
 
-                    <button class="button">@price</button>
+                    <button class="add_button" productId=@productId[i+j]>@price</button>
 
                 </td>
 

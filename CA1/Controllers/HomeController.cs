@@ -28,6 +28,7 @@ namespace CA1.Controllers
             string[] tags = new string[products.Count];
             string[] info = new string[products.Count];
             double[] prices = new double[products.Count];
+            string[] Id = new string[products.Count];
             for (int i = 0; i < products.Count; i++)
             {
                 images[i] = products[i].PhotoLink;
@@ -35,6 +36,7 @@ namespace CA1.Controllers
                 tags[i] = products[i].PhotoTag;
                 info[i] = products[i].Description;
                 prices[i] = products[i].Price;
+                Id[i] = products[i].Id;
             }
 
             ViewData["images"] = images;
@@ -42,7 +44,8 @@ namespace CA1.Controllers
             ViewData["tags"] = tags;
             ViewData["informations"] = info;
             ViewData["prices"] = prices;
-          
+            ViewData["productId"] = Id;
+            ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
             return View();
       
 

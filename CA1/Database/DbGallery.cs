@@ -24,7 +24,7 @@ namespace CA1.Database
             //setting composite PK for OrderDetail table
             //model.Entity<OrderDetail>().HasAlternateKey(x => new { x.OrderId, x.ProductId });
             //setting composite key for ShoppingCart table
-            //model.Entity<ShoppingCartDetail>().HasAlternateKey(x => new { x.UserId, x.ProductId });
+            model.Entity<ShoppingCartDetail>().HasKey(x => new { x.UserId, x.ProductId });
         }
 
         public DbSet<User> Users { get; set; }

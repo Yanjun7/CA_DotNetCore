@@ -26,13 +26,13 @@
                                 </form>
                             </div>
                         </li>
-                        <li>
-                            <div class="shoppingcart" style="float:right">
-                                <img src="/img/shoppingcart.png" class="cart" width="30"/>
-                            </div>
-                        </li>
                     </ul>
                 </div>
+
+                <div class="shoppingcart" style="float:right">
+                    <a href="/ShoppingCart/Index?sessionId=@ViewData["sessionId"]"> <img src="/img/shoppingcart.png" class="cart" width="30" /> </a>
+                </div>
+
                 <div style="float:right">
                     @if (ViewData["sessionId"] == null)
                     {
@@ -61,7 +61,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/product/search.js"></script>
-
+    <script src="~/js/shoppingcart/AddToCart.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

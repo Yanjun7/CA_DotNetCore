@@ -9,13 +9,8 @@ namespace CA1.Models
     public class ShoppingCartDetail
     {
         [MaxLength(50)]
-        public string Id { get; set; }
-
-        [Required]
-        [MaxLength(50)]
         public string UserId { get; set; }
 
-        [Required]
         [MaxLength(50)]
         public string ProductId { get; set; }
 
