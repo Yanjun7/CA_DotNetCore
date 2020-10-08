@@ -24,7 +24,7 @@ namespace CA1.Controllers
             List<ShoppingCartDetail> carts = db.ShoppingCart.ToList();
             if (carts.Count == 0)
             {
-                bool count = true;
+                bool count = false;
                 ViewData["count"] = count;
                 return View();
             }
@@ -75,7 +75,7 @@ namespace CA1.Controllers
                 Images[i] = images[keyid[i]];
                 Prices[i] = prices[keyid[i]]*quantity[i];
                 Info[i] = info[keyid[i]];
-                    total = total + Prices[i];
+                total += Prices[i];
             }
 
                
