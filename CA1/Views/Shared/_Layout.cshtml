@@ -1,5 +1,22 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+<style>
+    input[type=text] {
+        float:right;
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 3px solid #ccc;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+        outline: none;
+    }
+
+        input[type=text]:focus {
+            border: 3px solid #555;
+        }
+</style>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,6 +41,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @*<li>
+                            <div class="search">
+                                <form id="searchform" action="/Home/Search" method="post">
+                                    <input id="searchBar" type="text" placeholder="Enter your search here..." name="search" />
+                                    <input id="searchBtn" type="submit" value="Search" />
+                                </form>
+                            </div>
+                        </li>*@
                     </ul>
                 </div>
                 <div style="float:right">
@@ -48,13 +73,21 @@
 
             </div>
         </nav>
+@* -------search bar------- *@
+        <div class="search_field" float="right">
+            <form id="searchform" action="/Home/Search" method="post">
+                <input id="searchBar" type="text" value=@ViewData["userInput"] placeholder="Enter your search here..." name="search" />
+              @*  <input id="searchBtn" type="submit" value="Search" />*@
+            </form>
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+  
             @RenderBody()
         </main>
     </div>
-
+    
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2020 - CA1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -63,6 +96,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/product/search.js"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

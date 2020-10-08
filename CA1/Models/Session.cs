@@ -8,7 +8,7 @@ namespace CA1.Models
 {
     public class Session
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         public long Timestamp { get; set; }

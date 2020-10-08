@@ -19,6 +19,8 @@ namespace CA1.Controllers
         {
             this.db = db;
         }
+
+      
         public IActionResult Index()
         {
             List<Product> products = db.Products.ToList();
@@ -43,11 +45,27 @@ namespace CA1.Controllers
             ViewData["prices"] = prices;
             ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
             return View();
+      
+
         }
 
-        public IActionResult Privacy()
+        public IActionResult Search(string search)
         {
-            return View();
+
+            List<Product> products = db.Products.Where(
+                   x => x.Description.ToUpper().Contains(search.ToUpper()) ||
+                   x.ProductName.ToUpper().Contains(search.ToUpper())).ToList();
+
+            ViewData["products"] = products;
+            ViewData["userInput"] = search;
+
+            Debug.WriteLine(products.Count);
+            Session session = db.Sessions.FirstOrDefault(x =>
+                x.UserId == HttpContext.Request.Cookies["sessionId"]);
+            ViewData["sessionId"] = Request.Cookies["sessionId"];
+
+            return View("SearchResults");
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
