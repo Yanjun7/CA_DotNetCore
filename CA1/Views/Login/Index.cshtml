@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewData["Title"] = "Login";
+    string userName = (string)ViewData["userName"];
 }
 
 @section Scripts
@@ -26,7 +27,7 @@
             </td>
             <td>
                 <input id="username" name="username"
-                       class="form-control" />
+                       class="form-control" value=@userName>
             </td>
         </tr>
         <tr>

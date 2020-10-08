@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using CA1.Database;
 using CA1.Models;
 using System.Security.Cryptography.X509Certificates;
+using System.Diagnostics;
 
 namespace CA1.Controllers
 {
@@ -28,7 +29,7 @@ namespace CA1.Controllers
         public IActionResult Authenticate(string username, string password)
         {
             User user = db.Users.FirstOrDefault(x => x.Username == username && x.Password == password);
-
+            ViewData["userName"] = username;
             if (user == null)
             {
                 ViewData["Is_Login"] = "menu_hilite";
