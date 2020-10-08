@@ -2,19 +2,19 @@
     console.log("enter js");
     let elemList = document.getElementsByClassName("add_button");
    /* let elemList = document.getElementsByClassName("product_img");*/
-    console.log("enter addToCart.js, elem:" + elemList);
+    console.log("enter addToCart.js, elem:" + elemList[1]);
     
 
     for (let i = 0; i < elemList.length; i++) {
-        console.log("enter addToCart.js, elem:" + elemList);
+        console.log("enter addToCart.js loop" + elemList[i]);
         elemList[i].addEventListener("click", onAdd);
     }
 }
 
 function onAdd(event) {
-    console.log("enter addToCart.js");
+    console.log("enter onAdd");
     let elem = event.currentTarget;
-    let productId = elem.getAttribute("producId");
+    let productId = elem.getAttribute("productId");
     sendProctId(productId);
 }
 
@@ -29,6 +29,8 @@ function sendProctId(productId) {
             // receive response from server
             if (this.status === 200 || this.status === 302) {
                 let data = JSON.parse(this.responseText);
+                //console.log(data);
+                //window.location = "/Login/index";
 
                 if (this.status === 200) {
                     console.log("Successful operation: " + data.success);

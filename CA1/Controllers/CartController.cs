@@ -19,35 +19,39 @@ namespace CA1.Controllers
 
 
         //input  productId
+        [HttpPost]
         public IActionResult Add([FromBody] ProductObj productObj)
         {
             string sessionId = HttpContext.Request.Cookies["sessionId"];
             if (sessionId == null)
             {
-                /* return Json(new
-                 {
-                     status = "redirect",
-                     url = "/Login/Index"
-                 });*/
-                return Redirect("/Login/Authenticate");
-                //return RedirectToAction("Authenticate", "Login");
+                return Json(new
+                {
+                    status = "redirect",
+                    url = "/Login/Index"
+                });
+
             }
-            Session session = db.Sessions.FirstOrDefault(x => x.Id == sessionId);
-            //string userId = session.UserId;
-            ShoppingCartDetail cart = new ShoppingCartDetail()
+            else
             {
-                Id = Guid.NewGuid().ToString(),
-                UserId = session.UserId,
-                ProductId = productObj.ProductId
-            };
+                Session session = db.Sessions.FirstOrDefault(x => x.Id == sessionId);
+                //string userId = session.UserId;
+                ShoppingCartDetail cart = new ShoppingCartDetail()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserId = session.UserId,
+                    ProductId = productObj.ProductId
+                };
 
-            db.ShoppingCart.Add(cart);
-            db.SaveChanges();
+                db.ShoppingCart.Add(cart);
+                db.SaveChanges();
 
-            return Json(new
-            {
-                status = "success"
-            });
+                return Json(new
+                {
+                    status = "success"
+                });
+            }
+            
         }
     }
 }
