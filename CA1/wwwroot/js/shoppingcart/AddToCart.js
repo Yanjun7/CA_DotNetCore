@@ -1,6 +1,7 @@
 ﻿window.onload = function () {
-    /*let elemList = document.getElementsByClassName("button");*/
-    let elemList = document.getElementsByClassName("img_container");
+    console.log("enter js");
+    let elemList = document.getElementsByClassName("add_button");
+   /* let elemList = document.getElementsByClassName("product_img");*/
     console.log("enter addToCart.js, elem:" + elemList);
     
 
@@ -10,12 +11,14 @@
     }
 }
 
-
 function onAdd(event) {
     console.log("enter addToCart.js");
     let elem = event.currentTarget;
     let productId = elem.getAttribute("producId");
+    sendProctId(productId);
+}
 
+function sendProctId(productId) {
 
     let xhr = new XMLHttpRequest();
 
@@ -36,9 +39,9 @@ function onAdd(event) {
             }
         }
     };
-
-    // send productId
+    // send productId to Add controller
     xhr.send(JSON.stringify({
         ProductId: productId
     }));
 }
+

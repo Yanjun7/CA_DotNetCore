@@ -46,7 +46,7 @@ namespace CA1.Controllers
             ViewData["informations"] = info;
             ViewData["prices"] = prices;
             ViewData["productIds"] = productIds;
-
+            ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
             return View();
       
 
@@ -58,6 +58,10 @@ namespace CA1.Controllers
             List<Product> products = db.Products.Where(
                    x => x.Description.ToUpper().Contains(search.ToUpper()) ||
                    x.ProductName.ToUpper().Contains(search.ToUpper())).ToList();
+            if (products.Count == 0) 
+            {
+                return Redirect("~/Home/SearchNotFound");
+            }
 
             ViewData["products"] = products;
             ViewData["userInput"] = search;
@@ -69,6 +73,11 @@ namespace CA1.Controllers
 
             return View("SearchResults");
 
+        }
+
+        public IActionResult SearchNotFound()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

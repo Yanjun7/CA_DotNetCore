@@ -28,68 +28,100 @@
         bottom: 10px;
         opacity: 0.7;
     }
+
+    input[type=text] {
+        float: right;
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 3px solid #ccc;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+        outline: none;
+    }
+
+        input[type=text]:focus {
+            border: 3px solid #555;
+        }
 </style>
 
+
+
 <table>
+   
+
     @for (int i = 0; i < products.Count; i += 3)
     {
         int j;
 
-<tr>
-    @for (j = 0; j < 3 && i + j < products.Count; j++)
-    {
-<td>
-    @{ string url = products[i + j].PhotoLink; }
-    <div class="img_container">
-        <img src=@url width="350" height="235" />
+        <tr>
+            @for (j = 0; j < 3 && i + j < products.Count; j++)
+            {
+                <td>
+                    @{ string url = products[i + j].PhotoLink; }
+                    <div class="img_container">
+                        <img src=@url width="350" height="235" />
 
 
-    </div>
-</td>}
-    @for (; j < 3; j++)
-    {
-<td></td>}
-</tr> @*------------------------------------------------------------------------------------*@
+                    </div>
+                </td>
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
+        @*------------------------------------------------------------------------------------*@
 
-                <tr>
-                    @for (j = 0; j < 3 && i + j < products.Count; j++)
-                    {
+        <tr>
+            @for (j = 0; j < 3 && i + j < products.Count; j++)
+            {
 
-    <th class="name">
-        @{ string name = products[i + j].ProductName;
+                <th class="name">
+                    @{ string name = products[i + j].ProductName;
 
-            @name }
-    </th>}
-                    @for (; j < 3; j++)
-                    {
-    <td></td>}
-                </tr> @*------------------------------------------------------------------------------------*@
-                                <tr>
-                                    @for (j = 0; j < 3 && i + j < products.Count; j++)
-                                    {
+                        @name }
+                </th>
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
+        @*------------------------------------------------------------------------------------*@
+        <tr>
+            @for (j = 0; j < 3 && i + j < products.Count; j++)
+            {
 
-                    <td>
-                        @{ string information = products[i + j].Description;
+                <td>
+                    @{ string information = products[i + j].Description;
 
-                            @information }
-                    </td>}
-                                    @for (; j < 3; j++)
-                                    {
-                    <td></td>}
-                                </tr> @*------------------------------------------------------------------------------------*@
-                                                <tr>
-                                                    @for (j = 0; j < 3 && i + j < products.Count; j++)
-                                                    {
+                        @information }
+                </td>
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
+        @*------------------------------------------------------------------------------------*@
+        <tr>
+            @for (j = 0; j < 3 && i + j < products.Count; j++)
+            {
 
-                                    <td class="name">
-                                        @{ string price = products[i + j].Price + "-" + "Add" + " " + "To" + " " + "Cart"; }
+                <td class="name">
+                    @{ string price = products[i + j].Price + "-" + "Add" + " " + "To" + " " + "Cart"; }
 
-                                        <button class="button" productId=@products[i+j]>@price</button>
+                    <button class="button" productId=@products[i+j]>@price</button>
 
-                                    </td>}
-                                                    @for (; j < 3; j++)
-                                                    {
-                                    <td></td>}
-                                                </tr>}
+                </td>
+            }
+            @for (; j < 3; j++)
+            {
+                <td></td>
+            }
+        </tr>
+    }
 </table>
 

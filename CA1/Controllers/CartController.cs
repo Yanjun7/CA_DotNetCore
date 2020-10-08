@@ -24,11 +24,13 @@ namespace CA1.Controllers
             string sessionId = HttpContext.Request.Cookies["sessionId"];
             if (sessionId == null)
             {
-                return Json(new
-                {
-                    status = "redirect",
-                    url = "/Login/Index"
-                });
+                /* return Json(new
+                 {
+                     status = "redirect",
+                     url = "/Login/Index"
+                 });*/
+                return Redirect("/Login/Authenticate");
+                //return RedirectToAction("Authenticate", "Login");
             }
             Session session = db.Sessions.FirstOrDefault(x => x.Id == sessionId);
             //string userId = session.UserId;
