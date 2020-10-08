@@ -35,15 +35,35 @@ namespace CA1.Controllers
             else
             {
                 Session session = db.Sessions.FirstOrDefault(x => x.Id == sessionId);
-                //string userId = session.UserId;
-                ShoppingCartDetail cart = new ShoppingCartDetail()
+             
+                string userId = session.UserId;
+                string productId = productObj.ProductId;
+                ShoppingCartDetail cartHistory = db.ShoppingCart.FirstOrDefault(x => x.UserId == userId &&
+                    x.ProductId == productId);
+                if (cartHistory == null)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    UserId = session.UserId,
-                    ProductId = productObj.ProductId
-                };
+                    ShoppingCartDetail cart0 = new ShoppingCartDetail()
+                    {
+                        UserId = userId,
+                        ProductId = productId,
+                        Quantity = 0
+                    };
+                    db.ShoppingCart.Add(cart0);
+                }
+                else 
+                {
+                    int qty = cartHistory.Quantity + 1;
+                    ShoppingCartDetail cart = new ShoppingCartDetail()
+                    {
+                        UserId = userId,
+                        ProductId = productId,
+                        Quantity = qty
+                    };
 
-                db.ShoppingCart.Add(cart);
+                    
+                    db.ShoppingCart.Remove(cartHistory);
+                    db.ShoppingCart.Add(cart);
+                }
                 db.SaveChanges();
 
                 return Json(new

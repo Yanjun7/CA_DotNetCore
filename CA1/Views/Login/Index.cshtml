@@ -1,53 +1,272 @@
-﻿
-@{
-    ViewData["Title"] = "Login";
+﻿@{
+    Layout = null;
 }
+@{ ViewData["Title"] = "Login"; }
 
 @section Scripts
 {
     <script src="~/js/login/index.js"></script>
 }
-
 <style>
     #err_msg {
         color: red;
         font-weight: bold;
         padding: 10px;
     }
+
+    a.navbar-brand {
+        white-space: normal;
+        text-align: center;
+        word-break: break-all;
+    }
+
+    /* Provide sufficient contrast against white background */
+    a {
+        color: #0366d6;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #1b6ec2;
+        border-color: #1861ac;
+    }
+
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        color: #fff;
+        background-color: #1b6ec2;
+        border-color: #1861ac;
+    }
+
+    /* Sticky footer styles
+    -------------------------------------------------- */
+    html {
+        font-size: 14px;
+    }
+
+    .border-top {
+        border-top: 1px solid #e5e5e5;
+    }
+
+    .border-bottom {
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .box-shadow {
+        box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    }
+
+    button.accept-policy {
+        font-size: 1rem;
+        line-height: inherit;
+    }
+
+    /* Sticky footer styles
+    -------------------------------------------------- */
+    html {
+        position: relative;
+        min-height: 100%;
+    }
+
+    body {
+        /* Margin bottom by footer height */
+        margin-bottom: 60px;
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        white-space: nowrap;
+        line-height: 60px; /* Vertically center the text there */
+    }
+
+    /* To highlight selected item on the application menu */
+    .menu_hilite {
+        font-weight: bold;
+    }
+
+    .menu_hide {
+        visibility: hidden;
+    }
 </style>
 
-<p></p>
+<!DOCTYPE html>
+<html lang="en">
 
-<form id="form" action="/Login/Authenticate" method="post">
-    <table align="center">
-        <tr>
-            <td>
-                Username:
-            </td>
-            <td>
-                <input id="username" name="username"
-                       class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Password:
-            </td>
-            <td>
-                <input id="password" name="password"
-                       type="password" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="right">
-                <input id="submitBtn" type="submit" class="btn btn-success" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <div id="err_msg">@ViewData["errMsg"]</div>
-            </td>
-        </tr>
-    </table>
-</form>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CA1</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CA1</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+                <div style="float:right">
+                    @if (ViewData["sessionId"] == null)
+                    {
+                        <a class="nav-link text-dark @ViewData["Is_Login"]" asp-controller="Login" asp-action="Index">Login</a> }
+                    else
+                    {
+                        <a class="nav-link text-dark" asp-controller="Logout" asp-action="Index">Logout</a>}
+                </div>
 
+            </div>
+        </nav>
+
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+
+            <p></p>
+
+            <form id="form" action="/Login/Authenticate" method="post">
+                <table align="center">
+                    <tr>
+                        <td>
+                            Username:
+                        </td>
+                        <td>
+                            <input id="username" name="username"
+                                   class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Password:
+                        </td>
+                        <td>
+                            <input id="password" name="password"
+                                   type="password" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right">
+                            <input id="submitBtn" type="submit" class="btn btn-success" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <div id="err_msg">@ViewData["errMsg"]</div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - CA1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/product/search.js"></script>
+    <script src="~/js/shoppingcart/AddToCart.js"></script>
+
+    @* @RenderSection("Scripts", required: false)*@
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+    <p></p>
+
+    <form id="form" action="/Login/Authenticate" method="post">
+        <table align="center">
+            <tr>
+                <td>
+                    Username:
+                </td>
+                <td>
+                    <input id="username" name="username"
+                           class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password:
+                </td>
+                <td>
+                    <input id="password" name="password"
+                           type="password" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right">
+                    <input id="submitBtn" type="submit" class="btn btn-success" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <div id="err_msg">@ViewData["errMsg"]</div>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+*@

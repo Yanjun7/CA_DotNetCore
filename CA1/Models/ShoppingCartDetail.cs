@@ -8,8 +8,8 @@ namespace CA1.Models
 {
     public class ShoppingCartDetail
     {
-        [MaxLength(50)]
-        public string Id { get; set; }
+        //[MaxLength(50)]
+        //public string Id { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -21,5 +21,8 @@ namespace CA1.Models
 
         public virtual User User { get; set; }
         public virtual Product Product { get; set; }
+
+        [Required]
+        public int Quantity { get; set; }
     }
 }
