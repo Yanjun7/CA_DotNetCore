@@ -1,14 +1,18 @@
 ﻿window.onload = function () {
-    let elemList = document.getElementsByClassName("button");
+    /*let elemList = document.getElementsByClassName("button");*/
+    let elemList = document.getElementsByClassName("img_container");
+    console.log("enter addToCart.js, elem:" + elemList);
+    
 
     for (let i = 0; i < elemList.length; i++) {
+        console.log("enter addToCart.js, elem:" + elemList);
         elemList[i].addEventListener("click", onAdd);
     }
 }
 
 
 function onAdd(event) {
-
+    console.log("enter addToCart.js");
     let elem = event.currentTarget;
     let productId = elem.getAttribute("producId");
 

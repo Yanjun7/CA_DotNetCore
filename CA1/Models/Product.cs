@@ -8,7 +8,7 @@ namespace CA1.Models
 {
     public class Product
     {
-        [MaxLength(500)]
+        [MaxLength(50)]
         public string Id { get; set; }
 
         [Required]
