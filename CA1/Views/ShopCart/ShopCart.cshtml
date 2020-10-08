@@ -1,4 +1,6 @@
 ﻿<link rel="stylesheet" href="~/css/Backstyle.css" />
+
+
 @{ 
     bool count = (bool)ViewData["count"];
 
@@ -7,6 +9,7 @@
     string[] informations = (string[])ViewData["informations"];
     double[] prices = (double[])ViewData["prices"];
     int[] quentity = (int[])ViewData["quantity"];
+    double total = (double)ViewData["total"];
 
 }
 <div id='t-warp'>
@@ -18,22 +21,18 @@
     }
     else
     {
-        {
-            
-        }
-
         <h1>Review your bag.</h1>
         <p><b>Free delivery and free returns.</b></p>
-        @for(int i = 0; i < names.Length; i ++)
+        @for(int i = 0; i < images.Length; i ++)
         {
         <HR />
         <table>
             <tr>
 
                 <td width="200" rowspan="2"><img SRC=@images[i]  height="100" width="175"></td>
-                <th>@names[i] &emsp; &emsp; &emsp; &emsp;&emsp;@quentity[i] &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; @prices[i]</th>
+                <th>@names[i] &emsp; &emsp; &emsp; &emsp;&emsp;<button class="button2"><img src="~/img/Sub.png" height="20" width="20"></button>&emsp; @quentity[i] &emsp;<button class="button button2"><img src="~/img//Add.png" height="20" width="20"/></button> &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $@prices[i]</th>
             </tr>
-            <tr><td align=right><button>Remove</button></td></tr>
+            <tr><td align=right><button class="button">Remove</button></td></tr>
         </table>
         <div id='t-warp2'>
             <HR />
@@ -45,15 +44,7 @@
             </tr>
             <tr><td><a href='#'>Learn more</a></td></tr>
         </table>
-        @*<div id='t-warp2'>
-            <HR />
-        </div>
-        <table>
-            <tr>
-                <td width="200" rowspan="2"></td>
-                <th>Add a gift message &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <a href='#'>Add</a></th>
-            </tr>
-        </table>*@
+       
         <br /><br /><br />
         }
 
@@ -62,7 +53,7 @@
         <table>
             <tr>
                 <td width="200" rowspan="2"></td>
-                <td>Subtotal &emsp; &emsp;&emsp;&emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$2,298.00</td>
+                <td>Subtotal &emsp; &emsp;&emsp;&emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$@total</td>
             </tr>
             <tr><td>Shipping&emsp; &emsp;&emsp;&emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;FREE</td>
         </table>
@@ -72,7 +63,7 @@
         <table>
             <tr>
                 <td width="200" rowspan="2"></td>
-                <th>Total &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $2,298.00</th>
+                <th>Total &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $@total</th>
             </tr>
         </table>
         <br /><br />

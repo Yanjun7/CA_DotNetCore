@@ -22,9 +22,9 @@ namespace CA1.Controllers
         public IActionResult ShopCart()
         {
             List<ShoppingCartDetail> carts = db.ShoppingCart.ToList();
-            if(carts.Count==0)
+            if (carts.Count == 0)
             {
-                bool count = false;
+                bool count = true;
                 ViewData["count"] = count;
                 return View();
             }
@@ -68,22 +68,35 @@ namespace CA1.Controllers
             string[] Images = new string[keyid.Length];
             double[] Prices = new double[keyid.Length];
             string[] Info = new string[keyid.Length];
-            
-            for(int i=0;i<keyid.Length;i++)
+            double total=0;
+            for (int i=0;i<keyid.Length;i++)
             {
                 Names[i] = names[keyid[i]];
                 Images[i] = images[keyid[i]];
                 Prices[i] = prices[keyid[i]]*quantity[i];
                 Info[i] = info[keyid[i]];
+                    total = total + Prices[i];
             }
 
-            ViewData["images"] = Images;
-            ViewData["names"] = Names;
-            ViewData["informations"] = Info;
-            ViewData["prices"] = Prices;
-            ViewData["quantity"] = quantity;
+               
+                
 
-            return View();
+                ViewData["images"] = Images;
+                ViewData["names"] = Names;
+                ViewData["informations"] = Info;
+                ViewData["prices"] = Prices;
+                ViewData["quantity"] = quantity;
+                ViewData["total"] = total;
+                 
+
+                //测试用！
+                //ViewData["images"] = images;
+                //ViewData["names"] = names;
+                //ViewData["informations"] = info;
+                //ViewData["prices"] = prices;
+                //ViewData["quantity"] = quantity;
+
+                return View();
             }
         }
 

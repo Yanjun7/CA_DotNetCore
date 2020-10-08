@@ -13,6 +13,10 @@
     width: 200px
 }
 
+.button{
+
+}
+
 .button1 {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
@@ -32,3 +36,13 @@
 body {
     font-family: San Francisco;
 }
+
+
+.button2 {
+    background-color: white; /* Green */
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
