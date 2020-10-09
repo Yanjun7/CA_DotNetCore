@@ -19,5 +19,6 @@ namespace CA1.Models
         public DateTime TransactionDate { get; set; }
 
         public virtual User User { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

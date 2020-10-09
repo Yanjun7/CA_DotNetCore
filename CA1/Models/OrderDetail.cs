@@ -21,8 +21,7 @@ namespace CA1.Models
         [MaxLength(50)]
         public string ProductId { get; set; }
 
-        [Required]
-        public int Quantity { get; set; }
+       
 
         [Required]
         [MaxLength(1000)]
