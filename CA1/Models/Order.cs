@@ -14,10 +14,12 @@ namespace CA1.Models
         [Required]
         [MaxLength(50)]
         public string UserId { get; set; }
-        
+
         [Required]
         public DateTime TransactionDate { get; set; }
 
         public virtual User User { get; set; }
+
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

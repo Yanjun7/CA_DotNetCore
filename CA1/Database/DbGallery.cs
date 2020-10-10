@@ -22,9 +22,11 @@ namespace CA1.Database
         protected override void OnModelCreating(ModelBuilder model)
         {
             //setting composite PK for OrderDetail table
-            //model.Entity<OrderDetail>().HasAlternateKey(x => new { x.OrderId, x.ProductId });
+            //model.Entity<OrderDetail>().HasKey(x => new { x.OrderId, x.ProductId });
             //setting composite key for ShoppingCart table
             model.Entity<ShoppingCartDetail>().HasKey(x => new { x.UserId, x.ProductId });
+            //.HasKey creates a composite primary key
+            //.HasAlternateKey creates a composite alternate key
         }
 
         public DbSet<User> Users { get; set; }

@@ -60,6 +60,7 @@ namespace CA1.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult Add([FromBody] ProductObj productObj)
         {
             string sessionId = HttpContext.Request.Cookies["sessionId"];
@@ -103,6 +104,46 @@ namespace CA1.Controllers
                 {
                     status = "success",
                     url = "/ShoppingCart/Index?sessionId=" + sessionId
+                });
+            }
+        }
+
+        public IActionResult CartIcon()
+        {
+            string sessionId = HttpContext.Request.Cookies["sessionId"];
+
+            if (sessionId != null)
+            {
+                Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
+                List<ShoppingCartDetail> cartItem = db.ShoppingCart.Where(x => x.UserId == session.UserId).ToList();
+
+                int cartItemCount = 0;
+
+                foreach (ShoppingCartDetail i in cartItem)
+                {
+                    cartItemCount += i.Quantity;
+                }
+
+                if (cartItemCount == 0)
+                {
+                    return Json(new
+                    {
+                        Count = 0
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        Count = cartItemCount
+                    });
+                }
+            }
+            else
+            {
+                return Json(new
+                {
+                    Count = 0
                 });
             }
         }

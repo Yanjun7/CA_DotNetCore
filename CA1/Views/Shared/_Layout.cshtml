@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="shoppingcart" style="float:right">
-                    <a href="/ShoppingCart/Index?sessionId=@ViewData["sessionId"]"> <img src="/img/shoppingcart.png" class="cart" width="30" /> </a>
+                    <a href="/ShoppingCart/Index?sessionId=@ViewData["sessionId"]" style="text-decoration:none"> <img src="/img/shoppingcart.png" class="cart" width="30" /> <span id="cartIcon">0</span> </a>
                 </div>
 
                 <div style="float:right">
@@ -62,6 +62,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/product/search.js"></script>
     <script src="~/js/shoppingcart/AddToCart.js"></script>
+@*    <script src="~/js/shoppingcart/cartIcon.js"></script>*@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
