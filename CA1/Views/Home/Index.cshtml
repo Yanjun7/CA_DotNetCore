@@ -5,6 +5,8 @@
     string[] informations = (string[])ViewData["informations"];
     double[] prices = (double[])ViewData["prices"];
     string[] productId = (string[])ViewData["productId"];
+    string sessionId = (string) ViewData["sessionId"];
+    string userName = (string)ViewData["userName"];
 }
 @section Scripts
 {
@@ -68,11 +70,16 @@
             </td>
         </tr>*@
 
-
-
-    @for (int i = 0; i < images.Length; i += 3)
+    @if (sessionId != null)
     {
-        int j;
+        <tr>
+            <th>Hello @userName.ToUpper() | <a href="/History">My Purchases</a></th>
+
+        </tr>
+    }
+        @for (int i = 0; i < images.Length; i += 3)
+        {
+            int j;
 
         <tr>
             @for (j = 0; j < 3 && i + j < images.Length; j++)
@@ -157,4 +164,4 @@
 
 
     }
-</table>
+    </table>

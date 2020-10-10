@@ -38,7 +38,6 @@ namespace CA1.Controllers
                 prices[i] = products[i].Price;
                 Id[i] = products[i].Id;
             }
-
             ViewData["images"] = images;
             ViewData["names"] = names;
             ViewData["tags"] = tags;
@@ -46,6 +45,13 @@ namespace CA1.Controllers
             ViewData["prices"] = prices;
             ViewData["productId"] = Id;
             ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
+
+            string sessionId = HttpContext.Request.Cookies["sessionId"];
+            if(sessionId != null)
+            {
+                Session session = db.Sessions.FirstOrDefault(x => x.Id == Guid.Parse(sessionId));
+                ViewData["userName"] = db.Users.FirstOrDefault(x => x.Id == session.UserId).Username;
+            }
             return View();
       
 
@@ -68,7 +74,7 @@ namespace CA1.Controllers
 
             Debug.WriteLine(products.Count);
             Session session = db.Sessions.FirstOrDefault(x =>
-                x.UserId == HttpContext.Request.Cookies["sessionId"]);
+                x.Id == Guid.Parse(HttpContext.Request.Cookies["sessionId"]));
             ViewData["sessionId"] = Request.Cookies["sessionId"];
 
             return View("SearchResults");

@@ -11,6 +11,8 @@
     }
 }
 
+
+
 function onAdd(event) {
     console.log("enter addToCart.js");
     let elem = event.currentTarget;
