@@ -28,16 +28,20 @@ namespace CA1.Controllers
                 });
             }
             Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
-            List<Order> orders = (List<Order>)db.Orders.Where(x => x.UserId == session.UserId);
+            List<Order> orders = db.Orders.Where(x => x.UserId == session.UserId).ToList();
             ViewData["Order"] = orders;  // ==> timestamp, userId
-            //List<string> productIds = new List<string>();
-            //List<string> ActivationCodes = new List<string>();  = (List<OrderDetail>)db.OrderDetails.Where(x => x.OrderId == orders[i].Id);
-            List<OrderDetail> orderDetails = new List<OrderDetail>();
-            for (int i = 0; i < orders.Count(); i++)
+                                         //List<string> productIds = new List<string>();
+                                         //List<string> ActivationCodes = new List<string>();  = (List<OrderDetail>)db.OrderDetails.Where(x => x.OrderId == orders[i].Id);
+
+            List<List<OrderDetail>> orderDetails = new List<List<OrderDetail>>();
+
+            for (int i = 0; i < orders.Count; i++)
             {
-                orderDetails.Add((OrderDetail)orders[i].OrderDetails);
+                List<OrderDetail> temp = db.OrderDetails.Where(x => x.OrderId == orders[i].Id).ToList();
+                orderDetails.Add(temp);
             }
-            ViewData["OrderDetails"] = orderDetails;
+                
+            ViewData["OrderDetails"] = orderDetails; //this is a list in a list
 
             return View();
         }
@@ -76,7 +80,7 @@ namespace CA1.Controllers
 
             return Json(new {
                 status = "success",
-                url = "/Payment/Index"
+                url = "/History/Index"
             });
         }
 

@@ -1,4 +1,6 @@
-﻿window.onload = function () {
+﻿//Have been merged with AddToCart.js
+
+/*window.onload = function () {
     console.log("cartIcon");
     for (let i = 1; i > 0; i--) {
         toStart();
@@ -27,4 +29,4 @@ function toStart() {
     };
 
     xhr2.send();
-}
+}*/

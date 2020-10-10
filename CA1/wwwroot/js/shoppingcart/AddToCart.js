@@ -4,26 +4,30 @@
     /* let elemList = document.getElementsByClassName("product_img");*/
     console.log("enter addToCart.js, elem:" + elemList);
 
-
+    //add to cart button on homepage
     for (let i = 0; i < elemList.length; i++) {
         console.log("enter addToCart.js, elem:" + elemList);
         elemList[i].addEventListener("click", onAdd);
     }
 
-    console.log("begin toStart");
-    //for (let i = 1; i > 0; i--) {
-        toStart();
-    //}
+    //minus button on cart page
+    let elem = document.getElementsByClassName("button_minus");
+    for (let i = 0; i < elem.length; i++) {
+        elem[i].addEventListener("click", minus);
+    }
+
+    //cartIcon
+    toStart();
 }
 
 function onAdd(event) {
     console.log("enter addToCart.js");
     let elem = event.currentTarget;
     let productId = elem.getAttribute("productId");
-    sendProctId(productId);
+    sendProctId_Add(productId);
 }
 
-function sendProctId(productId) {
+function sendProctId_Add(productId) {
 
     let xhr = new XMLHttpRequest();
 
@@ -33,13 +37,12 @@ function sendProctId(productId) {
         if (this.readyState == XMLHttpRequest.DONE) {
             // receive response from server
 
-            if (this.status == 200)
-            {
+            if (this.status == 200) {
                 data = JSON.parse(this.responseText);
 
                 if (data.status == "success") {
                     console.log("Successful operation: " + data.status);
-                    window.location = data.url;
+                    toStart();
                 }
 
                 if (data.status == "redirect") {
@@ -54,6 +57,38 @@ function sendProctId(productId) {
     }));
 }
 
+function minus(event) {
+    let elem = event.currentTarget;
+    let productId = elem.getAttribute("productId");
+    sendProctId_minus(productId);
+}
+
+function sendProctId_minus(productId) {
+
+    let xhr_minus = new XMLHttpRequest();
+
+    xhr_minus.open("POST", "/ShoppingCart/Minus");
+    xhr_minus.setRequestHeader("Content-Type", "application/json; charset=utf8");
+    xhr_minus.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+            if (this.status == 200 || this.status == 302) {
+
+                let data = JSON.parse(this.responseText);
+
+                if (data.status == "success") {
+                    let p = document.getElementById("quantity_" + productId);
+                    p.innerHTML = data.quantity;
+                    toStart();
+                }
+            }
+        }
+    };
+    // send productId to Add controller
+    xhr_minus.send(JSON.stringify({
+        ProductId: productId
+    }));
+}
+
 function toStart() {
     console.log("entered toStart");
     let xhr2 = new XMLHttpRequest();
@@ -65,7 +100,7 @@ function toStart() {
         if (this.readyState == XMLHttpRequest.DONE) {
 
             if (this.status == 200) {
-                console.log(this.responseText);
+                //console.log(this.responseText);
 
                 data = JSON.parse(this.responseText);
 
