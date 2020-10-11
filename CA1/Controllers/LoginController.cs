@@ -21,8 +21,14 @@ namespace CA1.Controllers
         public IActionResult Index()
         {
             ViewData["Is_Login"] = "menu_hilite";
-
+            ViewData["Expired"] = "false";
             return View();
+        }
+        public IActionResult Expired()
+        {
+            ViewData["Is_Login"] = "menu_hilite";
+            ViewData["Expired"] = "true";
+            return View("Index");
         }
 
         public IActionResult Authenticate(string username, string password)

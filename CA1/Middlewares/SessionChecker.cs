@@ -35,7 +35,7 @@ namespace CA1.Middlewares
                     db.Sessions.Remove(currentSession);
                     db.SaveChanges();
                     context.Response.Cookies.Delete("sessionId");
-                    context.Response.Redirect("/Login/Index");
+                    context.Response.Redirect("/Login/Expired");
                     return;
                 }
                 else

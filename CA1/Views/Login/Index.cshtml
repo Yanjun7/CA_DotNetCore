@@ -1,11 +1,15 @@
 ﻿
 @{
     ViewData["Title"] = "Login";
+    string has_expired = (string)ViewData["Expired"];
+    string is_expired = (string)ViewData["Expired"];
 }
 
 @section Scripts
 {
     <script src="~/js/login/index.js"></script>
+    @if (is_expired == "true")
+    {<script src="~/js/login/alert.js"></script>}
 }
 
 <style>

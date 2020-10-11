@@ -1,7 +1,8 @@
 ﻿window.onload = function () {
+	
 	let errDiv = document.getElementById("err_msg");
+    let form = document.getElementById("form");
 
-	let form = document.getElementById("form");
 	form.onsubmit = function () {
 		let elemUname = document.getElementById("username");
 		let elemPwd = document.getElementById("password");
