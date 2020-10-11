@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CA1.Database;
+using CA1.Middlewares;
 
 namespace CA1
 {
@@ -42,6 +43,7 @@ namespace CA1
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseMiddleware<SessionChecker>();
 
             app.UseEndpoints(endpoints =>
             {

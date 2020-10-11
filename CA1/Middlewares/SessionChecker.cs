@@ -27,7 +27,7 @@ namespace CA1.Middlewares
             string sessionId = context.Request.Cookies["sessionId"];
             if (sessionId != null)
             {
-                Session currentSession = db.Sessions.FirstOrDefault(x => x.Id == sessionId);
+                Session currentSession = db.Sessions.FirstOrDefault(x => x.Id == Guid.Parse(sessionId));
                 long oldTimestamp = currentSession.Timestamp;
                 long newTimestamp = DateTimeOffset.Now.ToUnixTimeSeconds();
                 if (newTimestamp - oldTimestamp > 3) // change it to 1200!!!!!!!!!!!!!!!!!!!!!!!
