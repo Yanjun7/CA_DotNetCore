@@ -22,6 +22,8 @@ namespace CA1.Controllers
       
         public IActionResult Index()
         {
+            string sessionId = HttpContext.Request.Cookies["sessionId"];
+
             List<Product> products = db.Products.ToList();
             string[] images = new string[products.Count];
             string[] names = new string[products.Count];
@@ -45,10 +47,20 @@ namespace CA1.Controllers
             ViewData["informations"] = info;
             ViewData["prices"] = prices;
             ViewData["productId"] = Id;
-            ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
-            return View();
-      
+            ViewData["sessionId"] = sessionId;
+            ViewData["home"] = "menu_hilite";
 
+            if (sessionId != null)
+            {
+                Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
+                ViewData["username"] = session.User.Username.ToUpper();
+            }
+            else
+            {
+                ViewData["username"] = "";
+            }
+
+            return View();
         }
 
         public IActionResult Search(string search)
@@ -67,10 +79,16 @@ namespace CA1.Controllers
             ViewData["products"] = products;
 
             Debug.WriteLine(products.Count);
-            Session session = db.Sessions.FirstOrDefault(x =>
-                x.UserId == HttpContext.Request.Cookies["sessionId"]);
-            ViewData["sessionId"] = Request.Cookies["sessionId"];
 
+            string sessionId = HttpContext.Request.Cookies["sessionId"];
+            if (sessionId != null)
+            {
+                Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
+                ViewData["sessionId"] = Request.Cookies["sessionId"];
+                ViewData["username"] = session.User.Username.ToUpper();
+            }
+
+            ViewData["home"] = "menu_hilite";
             return View("SearchResults");
 
         }

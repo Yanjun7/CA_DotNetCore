@@ -1,5 +1,84 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    List<OrderDetail> orderDetails = (List<OrderDetail>)ViewData["OrderDetails"];
+    List<Order> orders = (List<Order>)ViewData["Order"];
+    List<Product> products = (List<Product>)ViewData["Products"];
+
+    var iter = from eachorder in orderDetails
+               group eachorder by eachorder.ProductId;
+
 }
+<style>
+    /*body {
+            font-family: Comic Sans MS;
+        }*/
+    table {
+        width: 100%;
+        margin: auto;
+        font-family: Comic Sans MS;
+    }
+
+    td {
+        width: 400px;
+    }
+
+    .badge {
+        font-size: 14px !important;
+    }
+
+    .like_icon {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: 5px;
+        right: 30px;
+        cursor: pointer;
+    }
+
+    .img_container {
+        position: relative;
+    }
+
+    .button {
+        background-color: #D3CCCC;
+    }
+
+    .search {
+        text-align: right
+    }
+</style>
+
+<h1>My Purchase</h1>
+<br/>
+<br/>
+
+<table>
+    @foreach (var type in iter)
+    {
+        Product product = products.FirstOrDefault(x => x.Id == type.Key);
+
+        <tr>
+
+            <td>
+                <img src=@product.PhotoLink width="350" height="235" />
+            </td>
+            <td>
+                <h4 style="font-weight:bold">@product.ProductName<br /></h4>
+                <h6>Activation Code:</h6>
+                <select name="Activation Codes">
+                    @foreach (OrderDetail item in type)
+                    {
+                        <option value=@item.ActivationCode>@item.ActivationCode</option>
+                    }
+                </select>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2">
+                <br />
+                <hr />
+            </td>
+        </tr>
+    }
+
+</table>

@@ -11,21 +11,24 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Team9</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">The T9 Store</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark @ViewData["home"]" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+@*                        <li>
                             <div class="search">
                                 <form id="searchform" action="/Home/Search" method="post">
                                     <input id="searchBar" type="text" placeholder="Enter your search here..." name="search" />
                                     <input id="searchBtn" type="submit" value="Search" />
                                 </form>
                             </div>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
 
@@ -43,18 +46,32 @@
                         <a class="nav-link text-dark" asp-controller="Logout" asp-action="Index">Logout</a>
                     }
                 </div>
+
+                <div class="search_field" float="right">
+                    <form id="searchform" action="/Home/Search" method="post">
+                        <input id="searchBar" type="text" value=@ViewData["userInput"] placeholder="Enter your search here..." name="search" />
+                    </form>
+                </div>
             </div>
         </nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if (@ViewData["sessionId"] != null)
+            {
+                <table>
+                    <tr>
+                        <th>Hello @ViewData["username"] | <a href="/History">My Purchases</a> <hr/> </th>
+                    </tr>
+                </table>
+            }
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - CA1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - The T9 Store</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

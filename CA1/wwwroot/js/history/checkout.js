@@ -1,4 +1,4 @@
-﻿window.onload = function () {
+﻿/*window.onload = function () {
     let checkoutButton = document.getElementById("button_checkout");
     checkoutButton.addEventListener("click", CheckOut);
 }
@@ -23,4 +23,4 @@ function CheckOut(event) {
     };
 
     xhr.send();
-}
+}*/

@@ -26,11 +26,14 @@ namespace CA1.Controllers
                 return Redirect("/Login/Index");
 
             List<ShoppingCartDetail> cart = db.ShoppingCart.Where(x => x.UserId == currentSession.UserId).ToList();
-            ViewData["count"] = true;
 
-            if (cart == null)
+            if (cart.Count == 0)
             {
                 ViewData["count"] = false;
+            }
+            else
+            {
+                ViewData["count"] = true;
             }
 
             int cartCount = cart.Count;
@@ -51,7 +54,7 @@ namespace CA1.Controllers
                 info[i] = cart[i].Product.Description;
                 prices[i] = cart[i].Product.Price;
                 quantity[i] = cart[i].Quantity;
-                total += cart[i].Product.Price;
+                total += (cart[i].Product.Price * cart[i].Quantity);
             }
 
             ViewData["productId"] = productId;
@@ -61,13 +64,9 @@ namespace CA1.Controllers
             ViewData["prices"] = prices;
             ViewData["quantity"] = quantity;
             ViewData["total"] = total;
-            ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
+            ViewData["sessionId"] = sessionId;
+            ViewData["username"] = currentSession.User.Username.ToUpper();
 
-            return View();
-        }
-
-        public IActionResult Empty()
-        {
             return View();
         }
 
@@ -82,8 +81,6 @@ namespace CA1.Controllers
                     status = "redirect",
                     url = "/Login/Index"
                 });
-                //return Redirect("/Login/Index");
-                //return RedirectToAction("Authenticate", "Login");
             }
             else
             {
@@ -138,6 +135,49 @@ namespace CA1.Controllers
             {
                 status = "success",
                 quantity = shoppingCartDetail.Quantity
+            });
+        }
+
+        [HttpPost]
+        public IActionResult Plus([FromBody] ProductObj productId)
+        {
+            string sessionId = HttpContext.Request.Cookies["sessionId"];
+            Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
+            string userId = session.UserId;
+            ShoppingCartDetail shoppingCartDetail = db.ShoppingCart.FirstOrDefault(x => x.UserId == userId && x.ProductId == productId.ProductId);
+
+            if (shoppingCartDetail.Quantity == 20)
+                shoppingCartDetail.Quantity = 20; //setting a limit of maximum 20 in quantity per product, per transaction
+            else
+                shoppingCartDetail.Quantity += 1;
+
+            db.SaveChanges();
+
+            return Json(new
+            {
+                status = "success",
+                quantity = shoppingCartDetail.Quantity
+            });
+        }
+
+        public IActionResult Total()
+        {
+            string SessionId = HttpContext.Request.Cookies["sessionId"];
+            Session currentSession = db.Sessions.FirstOrDefault(x => x.Id.ToString() == SessionId);
+
+            List<ShoppingCartDetail> cart = db.ShoppingCart.Where(x => x.UserId == currentSession.UserId).ToList();
+
+            int cartCount = cart.Count;
+            double Total = 0;
+
+            for (int i = 0; i < cartCount; i++)
+            {
+                Total += cart[i].Product.Price * cart[i].Quantity;
+            }
+
+            return Json(new { 
+                status = "success",
+                total = Total
             });
         }
 
