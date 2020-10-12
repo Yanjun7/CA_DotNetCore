@@ -30,10 +30,21 @@ namespace CA1.Controllers
             ViewData["Expired"] = "true";
             return View("Index");
         }
+        public static string GetStringSha256Hash(string text)
+        {
+            if (String.IsNullOrEmpty(text))
+                return String.Empty;
 
+            using (var sha = new System.Security.Cryptography.SHA256Managed())
+            {
+                byte[] textData = System.Text.Encoding.UTF8.GetBytes(text);
+                byte[] hash = sha.ComputeHash(textData);
+                return BitConverter.ToString(hash).Replace("-", String.Empty);
+            }
+        }
         public IActionResult Authenticate(string username, string password)
         {
-            User user = db.Users.FirstOrDefault(x => x.Username == username && x.Password == password);
+            User user = db.Users.FirstOrDefault(x => x.Username == username && x.Password == GetStringSha256Hash(password));
 
             if (user == null)
             {
