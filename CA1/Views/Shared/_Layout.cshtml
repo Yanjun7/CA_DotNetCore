@@ -43,6 +43,12 @@
                         <a class="nav-link text-dark" asp-controller="Logout" asp-action="Index">Logout</a>
                     }
                 </div>
+                <div style="float:right">
+                    @if (ViewData["sessionId"] == null)
+                    {
+                        <a class="nav-link text-dark @ViewData["Registering"]" asp-controller="Register" asp-action="Index">Register</a>
+                    }
+                </div>
             </div>
         </nav>
     </header>
