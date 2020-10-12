@@ -13,9 +13,248 @@
 
 }
 
-@section Scripts{ 
+@section Scripts{
     <script src="~/js/history/checkout.js"></script>
     <script src="~/js/shoppingcart/AddToCart.js"></script>
+    <script>
+const baseRequest = {
+  apiVersion: 2,
+  apiVersionMinor: 0
+};
+const allowedCardNetworks = ["AMEX", "DISCOVER", "JCB", "MASTERCARD", "VISA"];
+const allowedCardAuthMethods = ["PAN_ONLY", "CRYPTOGRAM_3DS"];
+const tokenizationSpecification = {
+  type: 'PAYMENT_GATEWAY',
+  parameters: {
+    'gateway': 'example',
+    'gatewayMerchantId': 'exampleGatewayMerchantId'
+  }
+};
+const baseCardPaymentMethod = {
+  type: 'CARD',
+  parameters: {
+    allowedAuthMethods: allowedCardAuthMethods,
+    allowedCardNetworks: allowedCardNetworks
+  }
+};
+const cardPaymentMethod = Object.assign(
+  {},
+  baseCardPaymentMethod,
+  {
+    tokenizationSpecification: tokenizationSpecification
+  }
+);
+let paymentsClient = null;
+function getGoogleIsReadyToPayRequest() {
+  return Object.assign(
+      {},
+      baseRequest,
+      {
+        allowedPaymentMethods: [baseCardPaymentMethod]
+      }
+  );
+}
+function getGooglePaymentDataRequest() {
+  const paymentDataRequest = Object.assign({}, baseRequest);
+  paymentDataRequest.allowedPaymentMethods = [cardPaymentMethod];
+  paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+  paymentDataRequest.merchantInfo = {
+
+    // merchantId: '12345678901234567890',
+    merchantName: 'Example Merchant'
+  };
+  paymentDataRequest.callbackIntents = ["SHIPPING_ADDRESS",  "SHIPPING_OPTION", "PAYMENT_AUTHORIZATION"];
+  paymentDataRequest.shippingAddressRequired = true;
+  paymentDataRequest.shippingAddressParameters = getGoogleShippingAddressParameters();
+  paymentDataRequest.shippingOptionRequired = true;
+  return paymentDataRequest;
+}
+function getGooglePaymentsClient() {
+  if ( paymentsClient === null ) {
+    paymentsClient = new google.payments.api.PaymentsClient({
+      environment: "TEST",
+      merchantInfo: {
+        merchantName: "Merchant Team 9",
+        merchantId: "01234567890123456789"
+      },
+      paymentDataCallbacks: {
+        onPaymentAuthorized: onPaymentAuthorized,
+        onPaymentDataChanged: onPaymentDataChanged
+      }
+    });
+  }
+  return paymentsClient;
+}
+function onPaymentAuthorized(paymentData) {
+        return new Promise(function(resolve, reject){
+  // handle the response
+  processPayment(paymentData)
+    .then(function() {
+      resolve({transactionState: 'SUCCESS'});
+    })
+    .catch(function() {
+        resolve({
+        transactionState: 'ERROR',
+        error: {
+          intent: 'PAYMENT_AUTHORIZATION',
+          message: 'Insufficient funds',
+          reason: 'PAYMENT_DATA_INVALID'
+        }
+      });
+    });
+  });
+}
+function onPaymentDataChanged(intermediatePaymentData) {
+  return new Promise(function(resolve, reject) {
+        let shippingAddress = intermediatePaymentData.shippingAddress;
+    let shippingOptionData = intermediatePaymentData.shippingOptionData;
+    let paymentDataRequestUpdate = {};
+    if (intermediatePaymentData.callbackTrigger == "INITIALIZE" || intermediatePaymentData.callbackTrigger == "SHIPPING_ADDRESS") {
+      if(shippingAddress.administrativeArea == "NJ")  {
+        paymentDataRequestUpdate.error = getGoogleUnserviceableAddressError();
+      }
+      else {
+        paymentDataRequestUpdate.newShippingOptionParameters = getGoogleDefaultShippingOptions();
+        let selectedShippingOptionId = paymentDataRequestUpdate.newShippingOptionParameters.defaultSelectedOptionId;
+        paymentDataRequestUpdate.newTransactionInfo = calculateNewTransactionInfo(selectedShippingOptionId);
+      }
+    }
+    else if (intermediatePaymentData.callbackTrigger == "SHIPPING_OPTION") {
+      paymentDataRequestUpdate.newTransactionInfo = calculateNewTransactionInfo(shippingOptionData.id);
+    }
+    resolve(paymentDataRequestUpdate);
+  });
+}
+function calculateNewTransactionInfo(shippingOptionId) {
+        let newTransactionInfo = getGoogleTransactionInfo();
+  let shippingCost = getShippingCosts()[shippingOptionId];
+  newTransactionInfo.displayItems.push({
+    type: "LINE_ITEM",
+    label: "Shipping cost",
+    price: shippingCost,
+    status: "FINAL"
+  });
+  let totalPrice = 0.00;
+  newTransactionInfo.displayItems.forEach(displayItem => totalPrice += parseFloat(displayItem.price));
+  newTransactionInfo.totalPrice = totalPrice.toString();
+  return newTransactionInfo;
+}
+function onGooglePayLoaded() {
+  const paymentsClient = getGooglePaymentsClient();
+  paymentsClient.isReadyToPay(getGoogleIsReadyToPayRequest())
+      .then(function(response) {
+        if (response.result) {
+          addGooglePayButton();
+
+        }
+      })
+      .catch(function(err) {
+        // show error in developer console for debugging
+        console.error(err);
+      });
+}
+function addGooglePayButton() {
+  const paymentsClient = getGooglePaymentsClient();
+  const button =
+      paymentsClient.createButton({onClick: onGooglePaymentButtonClicked});
+  document.getElementById('container').appendChild(button);
+}
+function getGoogleTransactionInfo() {
+  return {
+        displayItems: [
+        {
+          label: "Subtotal",
+          type: "SUBTOTAL",
+          price: "11.00",
+        },
+      {
+          label: "Tax",
+          type: "TAX",
+          price: "1.00",
+        }
+    ],
+    countryCode: 'US',
+    currencyCode: "USD",
+    totalPriceStatus: "FINAL",
+    totalPrice: "12.00",
+    totalPriceLabel: "Total"
+  };
+}
+/**
+ * Provide a key value store for shippping options.
+ */
+function getShippingCosts() {
+        return {
+    "shipping-001": "0.00",
+    "shipping-002": "1.99",
+    "shipping-003": "10.00"
+  }
+}
+function getGoogleShippingAddressParameters() {
+        return  {
+        allowedCountryCodes: ['US'],
+    phoneNumberRequired: true
+  };
+}
+function getGoogleDefaultShippingOptions() {
+        return {
+      defaultSelectedOptionId: "shipping-001",
+      shippingOptions: [
+        {
+          "id": "shipping-001",
+          "label": "Free: Standard shipping",
+          "description": "Free Shipping delivered in 5 business days."
+        },
+        {
+          "id": "shipping-002",
+          "label": "$1.99: Standard shipping",
+          "description": "Standard shipping delivered in 3 business days."
+        },
+        {
+          "id": "shipping-003",
+          "label": "$10: Express shipping",
+          "description": "Express shipping delivered in 1 business day."
+        },
+      ]
+  };
+}
+function getGoogleUnserviceableAddressError() {
+        return {
+    reason: "SHIPPING_ADDRESS_UNSERVICEABLE",
+    message: "Cannot ship to the selected address",
+    intent: "SHIPPING_ADDRESS"
+        };
+}
+function prefetchGooglePaymentData() {
+  const paymentDataRequest = getGooglePaymentDataRequest();
+  // transactionInfo must be set but does not affect cache
+  paymentDataRequest.transactionInfo = {
+    totalPriceStatus: 'NOT_CURRENTLY_KNOWN',
+    currencyCode: 'USD'
+  };
+  const paymentsClient = getGooglePaymentsClient();
+  paymentsClient.prefetchPaymentData(paymentDataRequest);
+}
+function onGooglePaymentButtonClicked() {
+  const paymentDataRequest = getGooglePaymentDataRequest();
+  paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+  const paymentsClient = getGooglePaymentsClient();
+  paymentsClient.loadPaymentData(paymentDataRequest);
+}
+function processPayment(paymentData) {
+        return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+        // show returned data in developer console for debugging
+         console.log(paymentData);
+
+                paymentToken = paymentData.paymentMethodData.tokenizationData.token;
+        resolve({});
+    }, 3000);
+  });
+}</script>
+    <script async
+            src="https://pay.google.com/gp/p/js/pay.js"
+            onload="onGooglePayLoaded()"></script>
 }
 
 <div id='t-warp'>
@@ -64,7 +303,7 @@
                     <td width="200" rowspan="2"></td>
                     <th>@informations[i]</th>
                 </tr>
-@*                <tr><td><a href='#'>Learn more</a></td></tr>*@
+                @*                <tr><td><a href='#'>Learn more</a></td></tr>*@
             </table>
 
             <br /><br /><br />
@@ -89,9 +328,10 @@
             </tr>
         </table>
         <br /><br />
-        <div id='t-warp3'>
-            <h6 id="quantity_error" style="color:red; font-weight:bold"></h6>
-            <button class="button1" id="button_checkout"><b>Check Out</b></button>
-        </div>
+              <div id='t-warp3'>
+                  <h6 id="quantity_error" style="color:red; font-weight:bold"></h6>
+                  <button class="button1" id="button_checkout"><b>Check Out</b></button>
+                <div id="container"></div>    
+              </div>
     }
 </div>
