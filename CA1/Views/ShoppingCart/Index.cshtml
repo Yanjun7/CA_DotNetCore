@@ -61,7 +61,7 @@ function getGooglePaymentDataRequest() {
   paymentDataRequest.merchantInfo = {
 
     // merchantId: '12345678901234567890',
-    merchantName: 'Example Merchant'
+      merchantName: 'The T9 Store'
   };
   paymentDataRequest.callbackIntents = ["SHIPPING_ADDRESS",  "SHIPPING_OPTION", "PAYMENT_AUTHORIZATION"];
   paymentDataRequest.shippingAddressRequired = true;
@@ -140,6 +140,7 @@ function calculateNewTransactionInfo(shippingOptionId) {
   return newTransactionInfo;
 }
 function onGooglePayLoaded() {
+    
   const paymentsClient = getGooglePaymentsClient();
   paymentsClient.isReadyToPay(getGoogleIsReadyToPayRequest())
       .then(function(response) {
@@ -160,23 +161,24 @@ function addGooglePayButton() {
   document.getElementById('container').appendChild(button);
 }
 function getGoogleTransactionInfo() {
-  return {
+    return {
         displayItems: [
-        {
-          label: "Subtotal",
-          type: "SUBTOTAL",
-          price: "11.00",
-        },
-      {
-          label: "Tax",
-          type: "TAX",
-          price: "1.00",
-        }
+            {
+                label: "Subtotal",
+                type: "SUBTOTAL",
+                price: "899",
+            },
+            {
+                label: "Tax",
+                type: "TAX",
+                price: "0.00",
+            }
+             
     ],
     countryCode: 'US',
     currencyCode: "USD",
     totalPriceStatus: "FINAL",
-    totalPrice: "12.00",
+    totalPrice: "899",
     totalPriceLabel: "Total"
   };
 }
@@ -235,12 +237,25 @@ function prefetchGooglePaymentData() {
   const paymentsClient = getGooglePaymentsClient();
   paymentsClient.prefetchPaymentData(paymentDataRequest);
 }
+
 function onGooglePaymentButtonClicked() {
   const paymentDataRequest = getGooglePaymentDataRequest();
   paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
   const paymentsClient = getGooglePaymentsClient();
-  paymentsClient.loadPaymentData(paymentDataRequest);
+    paymentsClient.loadPaymentData(paymentDataRequest);
+    
+    //CheckOut();
+    //window.location = "/History/CheckOut";
+   @* sleep(3000).then(() => {
+        
+    });*@
+    
 }
+@*function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+*@
+       
 function processPayment(paymentData) {
         return new Promise(function(resolve, reject) {
         setTimeout(function() {
@@ -249,9 +264,13 @@ function processPayment(paymentData) {
 
                 paymentToken = paymentData.paymentMethodData.tokenizationData.token;
         resolve({});
-    }, 3000);
-  });
-}</script>
+        }, 3000);
+            CheckOut();
+        }
+        );
+       
+}
+    </script>
     <script async
             src="https://pay.google.com/gp/p/js/pay.js"
             onload="onGooglePayLoaded()"></script>

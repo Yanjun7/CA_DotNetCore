@@ -42,6 +42,8 @@ namespace CA1.Controllers
 
             if (orders.Count == 0)
             {
+                ViewData["sessionId"] = sessionId;
+                ViewData["username"] = session.User.Username.ToUpper();
                 return View("noOrders");
             }
 
@@ -118,6 +120,10 @@ namespace CA1.Controllers
         }
 
         public IActionResult Unsuccessful()
+        {
+            return View();
+        }
+        public IActionResult SuccessfullyPaid()
         {
             return View();
         }

@@ -181,6 +181,8 @@ namespace CA1.Controllers
             });
         }
 
+
+      
         public IActionResult CartIcon()
         {
             string sessionId = HttpContext.Request.Cookies["sessionId"];
