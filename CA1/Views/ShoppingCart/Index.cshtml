@@ -8,7 +8,7 @@
     string[] informations = (string[])ViewData["informations"];
     double[] prices = (double[])ViewData["prices"];
     int[] quentity = (int[])ViewData["quantity"];
-    double total = (double)ViewData["total"];
+    string total = (string)ViewData["total"];
     string[] productId = (string[])ViewData["productId"];
 
 }
@@ -61,7 +61,7 @@ function getGooglePaymentDataRequest() {
   paymentDataRequest.merchantInfo = {
 
     // merchantId: '12345678901234567890',
-    merchantName: 'Example Merchant'
+    merchantName: 'The T9 Store'
   };
   paymentDataRequest.callbackIntents = ["SHIPPING_ADDRESS",  "SHIPPING_OPTION", "PAYMENT_AUTHORIZATION"];
   paymentDataRequest.shippingAddressRequired = true;
@@ -165,18 +165,18 @@ function getGoogleTransactionInfo() {
         {
           label: "Subtotal",
           type: "SUBTOTAL",
-          price: "11.00",
+          price: "899",
         },
       {
           label: "Tax",
           type: "TAX",
-          price: "1.00",
+          price: "0.00",
         }
     ],
     countryCode: 'US',
     currencyCode: "USD",
     totalPriceStatus: "FINAL",
-    totalPrice: "12.00",
+    totalPrice: "899",
     totalPriceLabel: "Total"
   };
 }
@@ -249,7 +249,8 @@ function processPayment(paymentData) {
 
                 paymentToken = paymentData.paymentMethodData.tokenizationData.token;
         resolve({});
-    }, 3000);
+        }, 3000);
+            CheckOut();
   });
 }</script>
     <script async
@@ -276,6 +277,7 @@ function processPayment(paymentData) {
         </table>
         @for (int i = 0; i < images.Length; i++)
         {
+            <div id="table_@productId[i]">
             <HR />
             <table>
                 <tr>
@@ -307,6 +309,7 @@ function processPayment(paymentData) {
             </table>
 
             <br /><br /><br />
+            </div>
         }
 
 
@@ -330,8 +333,15 @@ function processPayment(paymentData) {
         <br /><br />
               <div id='t-warp3'>
                   <h6 id="quantity_error" style="color:red; font-weight:bold"></h6>
-                  <button class="button1" id="button_checkout"><b>Check Out</b></button>
-                <div id="container"></div>    
+                  <table>
+                      <tr>
+                          <td>
+                              <div align="center"><button class="button1" id="button_checkout"><b>Check Out</b></button></div>
+                              <br/>
+                              <div id="container"></div>
+                          </td>
+                        </tr>
+                      </table>
               </div>
     }
 </div>

@@ -16,7 +16,7 @@ namespace CA1.Models
         public string Username { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(100)]
         public string Password { get; set; }
     }
 }

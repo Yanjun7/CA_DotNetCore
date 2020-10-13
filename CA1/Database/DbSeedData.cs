@@ -1,4 +1,5 @@
-﻿using CA1.Models;
+﻿using CA1.Controllers;
+using CA1.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +20,7 @@ namespace CA1.Database
         public void Init()
         {
             AddUsers();
-            AddProducts("SeedData/product.data");
+            AddProducts("SeedData/productGame.data");
         }
 
         public void AddUsers()
@@ -32,7 +33,7 @@ namespace CA1.Database
                 {
                     Id = "user_" + (1000 + (i+1)),
                     Username = usernames[i],
-                    Password = usernames[i]
+                    Password = LoginController.GetStringSha256Hash(usernames[i])
                 });
             }
             db.SaveChanges();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using CA1.Database;
 using CA1.Models;
@@ -42,6 +43,8 @@ namespace CA1.Controllers
 
             if (orders.Count == 0)
             {
+                ViewData["sessionId"] = sessionId;
+                ViewData["username"] = session.User.Username.ToUpper();
                 return View("noOrders");
             }
 
@@ -50,7 +53,7 @@ namespace CA1.Controllers
             List<Product> products = db.Products.ToList();
             ViewData["Products"] = products;
 
-            ViewData["sessionId"] = sessionId;
+            ViewData["IsLogin"] = session.IsLogin;
             ViewData["username"] = session.User.Username.ToUpper();
 
             return View();
@@ -60,60 +63,76 @@ namespace CA1.Controllers
         public IActionResult CheckOut()
         {
             string sessionId = HttpContext.Request.Cookies["sessionId"];
+            Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
             User user = db.Users.FirstOrDefault(x => x.Id == db.Sessions.FirstOrDefault(y => y.Id.ToString() == sessionId).UserId);
-            List<ShoppingCartDetail> shoppingcart = db.ShoppingCart.Where(c => c.UserId == user.Id).ToList();
-
-            bool quantityChecker = true;
-
-            for (int i = 0; i < shoppingcart.Count; i++)
+            
+            if (user == null)
             {
-                if (shoppingcart[i].Quantity == 0)
-                {
-                    quantityChecker = false;
-                    break;
-                }
-            }
-
-            if (quantityChecker == false)
-            {
-                return Json(new
-                {
-                    status = "unsuccessful"
-                });
-            }
-            else
-            {
-                Order newOrder = new Order()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    UserId = user.Id,
-                    TransactionDate = DateTime.Now
-                };
-
-                db.Orders.Add(newOrder);
-
-                for (int i = 0; i < shoppingcart.Count; i++)
-                {
-                    for (int j = 0; j < shoppingcart[i].Quantity; j++)
-                    {
-                        db.OrderDetails.Add(new OrderDetail
-                        {
-                            Id = Guid.NewGuid().ToString(),
-                            OrderId = newOrder.Id,
-                            ProductId = shoppingcart[i].ProductId,
-                            ActivationCode = Guid.NewGuid()
-                        });
-                    }
-                    db.ShoppingCart.Remove(shoppingcart[i]);
-                }
-
+                session.IsReadyToCheckOut = true;
                 db.SaveChanges();
 
                 return Json(new
                 {
-                    status = "success",
-                    url = "/History/Index"
+                    status = "notLogin",
+                    url = "/Login/Index"
                 });
+            }
+            else
+            {
+                List<ShoppingCartDetail> shoppingcart = db.ShoppingCart.Where(c => c.UserId == user.Id).ToList();
+
+                bool quantityChecker = true;
+
+                for (int i = 0; i < shoppingcart.Count; i++)
+                {
+                    if (shoppingcart[i].Quantity == 0)
+                    {
+                        quantityChecker = false;
+                        break;
+                    }
+                }
+
+                if (quantityChecker == false)
+                {
+                    return Json(new
+                    {
+                        status = "unsuccessful"
+                    });
+                }
+                else
+                {
+                    Order newOrder = new Order()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        UserId = user.Id,
+                        TransactionDate = DateTime.Now
+                    };
+
+                    db.Orders.Add(newOrder);
+
+                    for (int i = 0; i < shoppingcart.Count; i++)
+                    {
+                        for (int j = 0; j < shoppingcart[i].Quantity; j++)
+                        {
+                            db.OrderDetails.Add(new OrderDetail
+                            {
+                                Id = Guid.NewGuid().ToString(),
+                                OrderId = newOrder.Id,
+                                ProductId = shoppingcart[i].ProductId,
+                                ActivationCode = Guid.NewGuid()
+                            });
+                        }
+                        db.ShoppingCart.Remove(shoppingcart[i]);
+                    }
+
+                    db.SaveChanges();
+
+                    return Json(new
+                    {
+                        status = "success",
+                        url = "/History/Index"
+                    });
+                }
             }
         }
 

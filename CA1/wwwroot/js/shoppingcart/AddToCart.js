@@ -22,6 +22,12 @@
         elem_plus[i].addEventListener("click", plus);
     }
 
+    //remove button on cart page
+    let elem_remove = document.getElementsByClassName("button_remove");
+    for (let i = 0; i < elem_remove.length; i++) {
+        elem_remove[i].addEventListener("click", remove);
+    }
+
     //checkout button
     let checkoutButton = document.getElementById("button_checkout");
     checkoutButton.addEventListener("click", CheckOut);
@@ -163,6 +169,40 @@ function sendProctId_plus(productId) {
     }));
 }
 
+function remove(event) {
+    let elem = event.currentTarget;
+    let productId = elem.getAttribute("productId");
+    sendProductId_remove(productId);
+}
+
+function sendProductId_remove(productId) {
+    let xhr_remove = new XMLHttpRequest()
+    xhr_remove.open("post", "/ShoppingCart/Remove")
+    xhr_remove.setRequestHeader("Content-Type", "application/json;charset=utf-8")
+    xhr_remove.onreadystatechange = function () {
+        if (this.readyState == XMLHttpRequest.DONE) {
+            let data = JSON.parse(this.responseText)
+            if (data.status == "success") {
+                let table = document.getElementById("table_" + data.id)
+
+                if (data.count == 0) {
+                    window.location = data.url;
+                }
+                else {
+                    table.parentNode.removeChild(table);
+                }
+                
+                cartIcon();
+                total();
+            }
+        }
+    };
+
+    xhr_remove.send(JSON.stringify({
+        ProductId: productId
+    }));
+}
+
 function total() {
     let xhr_total = new XMLHttpRequest();
 
@@ -200,9 +240,13 @@ function CheckOut(event) {
 
                 if (data.status == "success")
                     window.location = data.url;
+
+                if (data.status == "notLogin")
+                    window.location = data.url;
+
                 if (data.status == "unsuccessful") {
                     let error = document.getElementById("quantity_error");
-                    error.innerHTML = "Item quantity cannot be 0";
+                    error.innerHTML = "Unssuccessful : <br/> Item quantity cannot be 0";
                 }
             }
         }

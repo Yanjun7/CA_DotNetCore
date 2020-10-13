@@ -23,6 +23,12 @@ namespace CA1.Controllers
         public IActionResult Index()
         {
             string sessionId = HttpContext.Request.Cookies["sessionId"];
+            Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
+
+            if (session != null)
+                ViewData["IsLogin"] = session.IsLogin;
+            else
+                ViewData["IsLogin"] = false;
 
             List<Product> products = db.Products.ToList();
             string[] images = new string[products.Count];
@@ -31,6 +37,7 @@ namespace CA1.Controllers
             string[] info = new string[products.Count];
             double[] prices = new double[products.Count];
             string[] Id = new string[products.Count];
+
             for (int i = 0; i < products.Count; i++)
             {
                 images[i] = products[i].PhotoLink;
@@ -47,12 +54,10 @@ namespace CA1.Controllers
             ViewData["informations"] = info;
             ViewData["prices"] = prices;
             ViewData["productId"] = Id;
-            ViewData["sessionId"] = sessionId;
             ViewData["home"] = "menu_hilite";
 
-            if (sessionId != null)
+            if (session != null && session.User != null)
             {
-                Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
                 ViewData["username"] = session.User.Username.ToUpper();
             }
             else
@@ -81,13 +86,18 @@ namespace CA1.Controllers
             Debug.WriteLine(products.Count);
 
             string sessionId = HttpContext.Request.Cookies["sessionId"];
-            if (sessionId != null)
+            Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
+            if (session != null && session.User != null)
             {
-                Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
-                ViewData["sessionId"] = Request.Cookies["sessionId"];
+                ViewData["IsLogin"] = session.IsLogin;
                 ViewData["username"] = session.User.Username.ToUpper();
             }
+            else
+            {
+                ViewData["IsLogin"] = false;
+            }
 
+            ViewData["userInput"] = search;
             ViewData["home"] = "menu_hilite";
             return View("SearchResults");
 

@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CA1.Database;
+using CA1.Controllers;
+using CA1.Models;
+using CA1.Middlewares;
 
 namespace CA1
 {
@@ -42,7 +45,7 @@ namespace CA1
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-
+            //app.UseMiddleware<SessionChecker>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -56,6 +59,15 @@ namespace CA1
             //this makes sure that the Db is create and available on your machine/server
             db.Database.EnsureCreated();
 
+            //this is to clean off all the ShoppingCart record that is added by Guest
+            List<ShoppingCartDetail> GuestRecord = db.ShoppingCart.Where(x => x.UserId == null).ToList();
+            foreach (ShoppingCartDetail item in GuestRecord)
+            {
+                db.ShoppingCart.Remove(item);
+            }
+            db.SaveChanges();
+
+            //this is too seed data when DB is newly created and empty
             //new DbSeedData(db).Init();
         }
     }

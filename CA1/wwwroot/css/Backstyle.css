@@ -16,12 +16,13 @@
 .button1 {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
-    padding: 16px 64px;
+    padding: 12px 87px 10px;
     text-align: center;
     background-color: blue;
     color: white;
     border: 0px solid #4CAF50;
     border-radius: 5px;
+    font-size: 14px;
 }
 
     .button1:hover {

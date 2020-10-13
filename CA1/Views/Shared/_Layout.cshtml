@@ -33,11 +33,11 @@
                 </div>
 
                 <div class="shoppingcart" style="float:right">
-                    <a href="/ShoppingCart/Index?sessionId=@ViewData["sessionId"]" style="text-decoration:none"> <img src="/img/shoppingcart.png" class="cart" width="30" /> <span id="cartIcon"></span> </a>
+                    <a href="/ShoppingCart/Index" style="text-decoration:none"> <img src="/img/shoppingcart.png" class="cart" width="30" /> <span id="cartIcon"></span> </a>
                 </div>
 
                 <div style="float:right">
-                    @if (ViewData["sessionId"] == null)
+                    @if ((bool)ViewData["IsLogin"] == false)
                     {
                         <a class="nav-link text-dark @ViewData["Is_Login"]" asp-controller="Login" asp-action="Index">Login</a>
                     }
@@ -57,7 +57,7 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @if (@ViewData["sessionId"] != null)
+            @if ((bool)ViewData["IsLogin"] == true)
             {
                 <table>
                     <tr>

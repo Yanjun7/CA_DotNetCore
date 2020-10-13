@@ -13,9 +13,14 @@ namespace CA1.Models
         [Required]
         public long Timestamp { get; set; }
 
-        [Required]
         [MaxLength(50)]
         public string UserId { get; set; }
+
+        [Required]
+        public bool IsLogin { get; set; } 
+
+        [Required]
+        public bool IsReadyToCheckOut { get; set; }
 
         public virtual User User { get; set; }
     }
