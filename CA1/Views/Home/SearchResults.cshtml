@@ -12,6 +12,17 @@
     table {
         width: 100%;
         margin: auto;
+        font-family: Comic Sans MS;
+    }
+
+    td {
+        width: 400px;
+    }
+    .name {
+        text-align: center
+    }
+    .button {
+        background-color: #D3CCCC;
     }
 
     .badge {
@@ -21,7 +32,9 @@
     .img_container {
         position: relative;
     }
-
+    .search {
+        text-align: right
+    }
     .badge_container {
         position: absolute;
         left: 10px;
@@ -46,11 +59,11 @@
 
                     </div>
                 </td>
-}
+            }
             @for (; j < 3; j++)
             {
                 <td></td>
-}
+            }
         </tr>
         @*------------------------------------------------------------------------------------*@
 
@@ -63,11 +76,11 @@
 
                         @name }
                 </th>
-}
+            }
             @for (; j < 3; j++)
             {
                 <td></td>
-}
+            }
         </tr>
         @*------------------------------------------------------------------------------------*@
         <tr>
@@ -79,11 +92,11 @@
 
                         @information }
                 </td>
-}
+            }
             @for (; j < 3; j++)
             {
                 <td></td>
-}
+            }
         </tr>
         @*------------------------------------------------------------------------------------*@
         <tr>
@@ -96,12 +109,17 @@
                     <button class="add_button" productId=@products[i+j].Id>@price</button>
 
                 </td>
-}
+            }
             @for (; j < 3; j++)
             {
                 <td></td>
-}
+            }
         </tr>
-}
+
+
+        <tr>
+            <td colspan="3"><hr /></td>
+        </tr>
+    }
 </table>
 
