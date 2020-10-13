@@ -20,6 +20,15 @@
 
 <form id="form" action="/Login/Authenticate" method="post">
     <table align="center">
+        @if ((string)ViewData["register"] == "successful")
+        {
+            <tr>
+                <td colspan="2">
+                    <div align="center" style="color:green;font-weight:bold">Your Account has been created successfully. <br /> Please Login to continue.</div>
+                </td>
+            </tr>
+        }
+
         <tr>
             <td>
                 Username:

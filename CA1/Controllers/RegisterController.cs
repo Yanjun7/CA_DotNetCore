@@ -19,6 +19,16 @@ namespace CA1.Controllers
         }
         public IActionResult Index()
         {
+            string sessionId = HttpContext.Request.Cookies["sessionId"];
+            Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
+
+            if (session == null)
+                ViewData["IsLogin"] = false;
+            else if (session.User == null)
+                ViewData["IsLogin"] = false;
+            else
+                ViewData["IsLogin"] = true;
+
             ViewData["title"] = "Register";
             ViewData["Is_Register"] = "menu_hilite";
             return View();
@@ -27,20 +37,44 @@ namespace CA1.Controllers
         [HttpPost]
         public IActionResult SaveToDatabase(string newUsername, string newPassword1)
         {
-            int suffix = db.Users.Count() + 1;
-            User newUser = new User()
+            List<User> CurrentUsers = db.Users.ToList();
+            bool IsDuplicateUsername = false;
+
+            for (int i = 0; i < CurrentUsers.Count; i++)
             {
-                Id = "User" + suffix,
-                Username = newUsername,
-                Password = LoginController.GetStringSha256Hash(newPassword1)
-            };
-            db.Users.Add(newUser);
-            //System.Diagnostics.Debug.WriteLine("!!!!!");
-            db.SaveChanges();
-            return RedirectToAction("Index", "Login");
+                if (newUsername == CurrentUsers[i].Username)
+                {
+                    IsDuplicateUsername = true;
+                    break;
+                }
+            }
+
+            if (IsDuplicateUsername == true)
+            {
+                ViewData["IsLogin"] = false;
+                ViewData["register"] = "unsuccessful";
+                return View("Index");
+            }
+            else
+            {
+                int suffix = db.Users.Count() + 1;
+                User newUser = new User()
+                {
+                    Id = "user_" + (1000 + suffix),
+                    Username = newUsername,
+                    Password = LoginController.GetStringSha256Hash(newPassword1)
+                };
+                db.Users.Add(newUser);
+                //System.Diagnostics.Debug.WriteLine("!!!!!");
+                db.SaveChanges();
+                ViewData["register"] = "successful";
+                ViewData["IsLogin"] = false;
+                return RedirectToAction("RegisterSuccessful", "Login");
+            }
+            
         }
 
-        public IActionResult CheckUserName([FromBody] Usernameobj newUsername)
+/*        public IActionResult CheckUserName([FromBody] Usernameobj newUsername)
         {
             foreach (User user in db.Users)
             {
@@ -56,6 +90,6 @@ namespace CA1.Controllers
             {
                 status = "success",
             });
-        }
+        }*/
     }
 }

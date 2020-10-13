@@ -2,12 +2,16 @@
     //cartIcon
     cartIcon();
 
+    //backspace feature on search bar
+    ListenToBackSpace();
+
     //add to cart button on homepage
     console.log("enter js");
     let elem_addcart = document.getElementsByClassName("add_button");
     for (let i = 0; i < elem_addcart.length; i++) {
         console.log("enter addToCart.js, elem:" + elem_addcart);
         elem_addcart[i].addEventListener("click", onAdd);
+        elem_addcart[i].addEventListener("click", Toastr);
     }
 
     //minus button on cart page
@@ -57,6 +61,22 @@ function cartIcon() {
     xhr_cartIcon.send();
 }
 
+function ListenToBackSpace() {
+    console.log("Listening to BACKSPACE");
+    let bar = document.getElementById("searchBar");
+    //let searchInput = bar.value
+    //console.log(searchInput);
+
+    bar.addEventListener('keydown', function (event) {
+        const key = event.key;
+        console.log("key: " + key);
+        if ((key === "Backspace" || key === "Delete") && document.getElementById("searchBar").value.length == 1) {
+            //console.log("listening to value change"+document.getElementById("searchBar").value);
+            window.location = "/Home/Index";
+        }
+    });
+}
+
 function onAdd(event) {
     console.log("enter addToCart.js");
     let elem = event.currentTarget;
@@ -93,6 +113,39 @@ function sendProctId_Add(productId) {
     xhr.send(JSON.stringify({
         "ProductId": productId
     }));
+}
+
+function Toastr() {
+    //参数设置，若用默认值可以省略以下面代
+
+    toastr.options = {
+
+        "closeButton": false, //是否显示关闭按钮
+
+        "debug": false, //是否使用debug模式
+
+        "positionClass": "toast-bottom-right",//弹出窗的位置
+
+        "showDuration": "300",//显示的动画时间
+
+        "hideDuration": "1000",//消失的动画时间
+
+        "timeOut": "3000", //展现时间
+
+        "extendedTimeOut": "1000",//加长展示时间
+
+        "showEasing": "swing",//显示时的动画缓冲方式
+
+        "hideEasing": "linear",//消失时的动画缓冲方式
+
+        "showMethod": "fadeIn",//显示时的动画方式
+
+        "hideMethod": "fadeOut" //消失时的动画方式
+    }
+
+    toastr.success("Added shopping cart successfully");
+    //成功提示绑定
+
 }
 
 function minus(event) {

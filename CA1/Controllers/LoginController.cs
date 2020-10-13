@@ -80,5 +80,13 @@ namespace CA1.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult RegisterSuccessful()
+        {
+            ViewData["Is_Login"] = "menu_hilite";
+            ViewData["IsLogin"] = false;
+            ViewData["register"] = "successful";
+            return View("Index");
+        }
     }
 }

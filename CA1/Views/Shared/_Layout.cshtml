@@ -21,19 +21,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark @ViewData["home"]" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-@*                        <li>
-                            <div class="search">
-                                <form id="searchform" action="/Home/Search" method="post">
-                                    <input id="searchBar" type="text" placeholder="Enter your search here..." name="search" />
-                                    <input id="searchBtn" type="submit" value="Search" />
-                                </form>
-                            </div>
-                        </li>*@
                     </ul>
                 </div>
 
                 <div class="shoppingcart" style="float:right">
-                    <a href="/ShoppingCart/Index" style="text-decoration:none"> <img src="/img/shoppingcart.png" class="cart" width="30" /> <span id="cartIcon"></span> </a>
+                    <a href="/ShoppingCart/Index" style="text-decoration:none"> <img src="/img/shoppingcart.png" class="cart" width="30" /> <span id="cartIcon"></span> &emsp; </a>
+                </div>
+
+                <div class="search_field" float="right">
+                    <form id="searchform" action="/Home/Search" method="post">
+                        <input id="searchBar" type="text" value=@ViewData["userInput"] placeholder="Enter your search here..." name="search" />
+                    </form>
                 </div>
 
                 <div style="float:right">
@@ -47,10 +45,11 @@
                     }
                 </div>
 
-                <div class="search_field" float="right">
-                    <form id="searchform" action="/Home/Search" method="post">
-                        <input id="searchBar" type="text" value=@ViewData["userInput"] placeholder="Enter your search here..." name="search" />
-                    </form>
+                <div style="float:right">
+                    @if ((bool)ViewData["IsLogin"] == false)
+                    {
+                        <a class="nav-link text-dark @ViewData["Registering"]" asp-controller="Register" asp-action="Index">Register</a>
+                    }
                 </div>
             </div>
         </nav>

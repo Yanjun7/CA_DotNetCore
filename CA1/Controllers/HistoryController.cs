@@ -20,12 +20,8 @@ namespace CA1.Controllers
         public IActionResult Index()
         {
             string sessionId = HttpContext.Request.Cookies["sessionId"];
-            if (sessionId == null)
-            {
-                return Redirect("/Login/Index");
-            }
-
             Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
+
             List<Order> orders = db.Orders.Where(x => x.UserId == session.UserId).ToList();
             ViewData["Order"] = orders;  // ==> timestamp, userId
                                          //List<string> productIds = new List<string>();
@@ -43,7 +39,7 @@ namespace CA1.Controllers
 
             if (orders.Count == 0)
             {
-                ViewData["sessionId"] = sessionId;
+                ViewData["IsLogin"] = session.IsLogin;
                 ViewData["username"] = session.User.Username.ToUpper();
                 return View("noOrders");
             }

@@ -119,7 +119,7 @@ namespace CA1.Controllers
             
             //searching for previous records in shoppingcart table
             ShoppingCartDetail cartDetail;
-            if (session.UserId != null)
+            if (session.User != null)
                 cartDetail = db.ShoppingCart.FirstOrDefault(x => x.UserId == userId && x.ProductId == productId);
             else
                 cartDetail = db.ShoppingCart.FirstOrDefault(x => x.SessionId == sessionId && x.ProductId == productId);
@@ -309,10 +309,20 @@ namespace CA1.Controllers
             string sessionId = HttpContext.Request.Cookies["sessionId"];
             Session session = db.Sessions.FirstOrDefault(x => x.Id.ToString() == sessionId);
             List<ShoppingCartDetail> GuestCart = db.ShoppingCart.Where(x => x.SessionId == sessionId).ToList();
+            List<ShoppingCartDetail> UserCart = db.ShoppingCart.Where(x => x.UserId == session.UserId).ToList();
 
-            foreach (ShoppingCartDetail c in GuestCart)
+            for (int i = 0; i < GuestCart.Count; i++)
             {
-                c.UserId = session.UserId;
+                GuestCart[i].UserId = session.UserId;
+                for (int j = 0; j < UserCart.Count; j++)
+                {
+                    if (GuestCart[i].ProductId == UserCart[j].ProductId)
+                    {
+                        UserCart[j].Quantity += GuestCart[i].Quantity;
+                        db.ShoppingCart.Remove(GuestCart[i]);
+                        db.SaveChanges();
+                    }
+                }
             }
 
             db.SaveChanges();
