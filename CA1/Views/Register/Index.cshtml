@@ -9,7 +9,7 @@
             let form = document.getElementById("form");
             let errDiv = document.getElementById("err_msg");
             form.onsubmit = function () {
-
+                //let c = true;
                 let elemNUname = document.getElementById("newUsername");
                 let elemPwd1 = document.getElementById("newPassword1");
                 let elemPwd2 = document.getElementById("newPassword2");
@@ -25,14 +25,18 @@
                     return false;	// cancel form submission
                 }
 
-                else if (!(nPwd1 === nPwd2)) {
+                if (!(nPwd1 === nPwd2)) {
                 errDiv.innerHTML = "Passwords do not match."
                 return false;
                 }
 
+                UserNameChecker(nUname);
+                //if (UserNameChecker(nUname) == "0") {
+                //    return false;
+                //}
                 return true;
             }
-
+            
 
             let elems = document.getElementsByClassName("form-control");
             for (let i = 0; i < elems.length; i++) {
@@ -43,7 +47,33 @@
                 }
             }
         }
+        function UserNameChecker(nUname) {
+            let xhr = new XMLHttpRequest();
+            
+            xhr.open("POST", "/Register/CheckUserName");
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
+            xhr.onreadystatechange = function () {
+                if (this.readyState == XMLHttpRequest.DONE) {
+                    if (this.status == 200) {
+                        data = JSON.parse(this.responseText);
+                        if (data.status == "DuplicatedUserName") {
+                          
+                            alert("asdfasdasdf");
+                            return "0";
+                            //errDiv.innerHTML = "User name already taken, please enter another username";
+                            //return false;
+                        }
+                    }
+                }
+            };
+            xhr.send(JSON.stringify({
+                "newUsername": nUname,
+            })
+            );
+        }
+
     </script>
+
 }
 
 

@@ -27,16 +27,6 @@ namespace CA1.Controllers
         [HttpPost]
         public IActionResult SaveToDatabase(string newUsername,string newPassword1)
         {
-            foreach(User user in db.Users)
-            {
-                if (user.Username == newUsername)
-                {
-                    return Json(new
-                    {
-                        status = "DuplicatedUserName",
-                    });
-                }
-            }
             int suffix = db.Users.Count()+1;
             User newUser = new User()
             {
@@ -45,8 +35,27 @@ namespace CA1.Controllers
                 Password = LoginController.GetStringSha256Hash(newPassword1)
             };
             db.Users.Add(newUser);
+            //System.Diagnostics.Debug.WriteLine("!!!!!");
             db.SaveChanges();
             return RedirectToAction("Index", "Login");
+        }
+
+        public IActionResult CheckUserName([FromBody]Usernameobj newUsername)
+        {
+            foreach (User user in db.Users)
+            {
+                if (user.Username == newUsername.Username)
+                {
+                    return Json(new
+                    {
+                        status = "DuplicatedUserName",
+                    });
+                }
+            }
+            return Json(new
+            {
+                status = "success",
+            });
         }
     }
 }
