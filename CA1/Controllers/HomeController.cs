@@ -77,6 +77,7 @@ namespace CA1.Controllers
                    x.ProductName.ToUpper().Contains(search.ToUpper())).ToList();
 
             ViewData["products"] = products;
+            ViewData["userInput"] = search;
 
             Debug.WriteLine(products.Count);
 

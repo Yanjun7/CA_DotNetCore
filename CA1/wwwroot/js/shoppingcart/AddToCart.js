@@ -1,6 +1,8 @@
 ﻿window.onload = function () {
     //cartIcon
     cartIcon();
+    ListenToBackSpace();
+
 
     //add to cart button on homepage
     console.log("enter js");
@@ -185,6 +187,25 @@ function total() {
     };
 
     xhr_total.send();
+}
+
+function ListenToBackSpace() {
+    console.log("Listening to BACKSPACE");
+    let bar = document.getElementById("searchBar");
+    //let searchInput = bar.value
+    //console.log(searchInput);
+
+    bar.addEventListener('keydown', function (event) {
+        const key = event.key;
+        console.log("key: "+key);
+        if ((key === "Backspace" || key === "Delete") && document.getElementById("searchBar").value.length == 1) {
+            //console.log("listening to value change"+document.getElementById("searchBar").value);
+            window.location = "/Home/Index";
+        }
+    }); 
+
+
+
 }
 
 function CheckOut(event) {
