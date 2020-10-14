@@ -48,6 +48,7 @@ namespace CA1.Controllers
             {
                 ViewData["Is_Login"] = "menu_hilite"; 
                 ViewData["errMsg"] = "No such user or incorrect password.";
+                ViewData["IsLogin"] = false;
                 return View("Index");
             }
             else if (session != null)
@@ -86,6 +87,14 @@ namespace CA1.Controllers
             ViewData["Is_Login"] = "menu_hilite";
             ViewData["IsLogin"] = false;
             ViewData["register"] = "successful";
+            return View("Index");
+        }
+
+        public IActionResult CheckOutUnsuccessful()
+        {
+            ViewData["Is_Login"] = "menu_hilite";
+            ViewData["IsLogin"] = false;
+            ViewData["checkout"] = "unsuccessful";
             return View("Index");
         }
     }
