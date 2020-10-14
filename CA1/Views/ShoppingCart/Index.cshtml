@@ -242,7 +242,8 @@ function onGooglePaymentButtonClicked() {
   paymentsClient.loadPaymentData(paymentDataRequest);
 }
 function processPayment(paymentData) {
-        return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
+        
         setTimeout(function() {
         // show returned data in developer console for debugging
          console.log(paymentData);
