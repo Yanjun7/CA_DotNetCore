@@ -48,6 +48,7 @@ namespace CA1.Controllers
             {
                 ViewData["Is_Login"] = "menu_hilite"; 
                 ViewData["errMsg"] = "No such user or incorrect password.";
+                ViewData["IsLogin"] = false;
                 return View("Index");
             }
             else if (session != null)
