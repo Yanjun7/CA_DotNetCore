@@ -53,6 +53,7 @@ namespace CA1.Controllers
             {
                 ViewData["IsLogin"] = false;
                 ViewData["register"] = "unsuccessful";
+                ViewData["username_input"] = newUsername;
                 return View("Index");
             }
             else
