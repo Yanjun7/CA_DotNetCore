@@ -6,7 +6,12 @@
 {
     <script src="~/js/product/search.js"></script>
     <script src="~/js/shoppingcart/AddToCart.js"></script>
+    <script src="~/js/toastr.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 }
+
+<link rel="stylesheet" href="~/css/toastr.min.css" />
+
 
 <style>
     table {
@@ -110,7 +115,7 @@
                 <td class="name">
                     @{ string price = products[i + j].Price.ToString("0.00"); }
 
-                    <button class="add_button" productId=@products[i+j].Id>$@price<br/>Add To Cart</button>
+                    <button class="add_button" productId=@products[i+j].Id>$@price<br />Add To Cart</button>
 
                 </td>
             }
