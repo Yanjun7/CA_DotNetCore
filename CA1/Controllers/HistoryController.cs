@@ -70,7 +70,7 @@ namespace CA1.Controllers
                 return Json(new
                 {
                     status = "notLogin",
-                    url = "/Login/Index"
+                    url = "/Login/CheckOutUnsuccessful"
                 });
             }
             else

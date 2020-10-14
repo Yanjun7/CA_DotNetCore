@@ -88,5 +88,13 @@ namespace CA1.Controllers
             ViewData["register"] = "successful";
             return View("Index");
         }
+
+        public IActionResult CheckOutUnsuccessful()
+        {
+            ViewData["Is_Login"] = "menu_hilite";
+            ViewData["IsLogin"] = false;
+            ViewData["checkout"] = "unsuccessful";
+            return View("Index");
+        }
     }
 }

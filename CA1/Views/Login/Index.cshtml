@@ -28,7 +28,14 @@
                 </td>
             </tr>
         }
-
+        @if ((string)ViewData["checkout"] == "unsuccessful")
+        {
+            <tr>
+                <td colspan="2">
+                    <div align="center" style="color:red;font-weight:bold">Payment Unsuccessful.<br />Please Login and try again.</div>
+                </td>
+            </tr>
+        }
         <tr>
             <td>
                 Username:
