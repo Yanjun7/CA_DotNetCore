@@ -63,6 +63,7 @@
             </td>
             <td>
                 <h4 style="font-weight:bold">@product.ProductName<br /></h4>
+                <h6>Quantity: @type.Count()</h6>
                 <h6>Activation Code:</h6>
                 <select name="Activation Codes">
                     @foreach (OrderDetail item in type)
