@@ -20,6 +20,7 @@ namespace CA1.Controllers
         {
             string sessionId = HttpContext.Request.Cookies["sessionId"];
             db.Sessions.Remove(new Session() { Id = Guid.Parse(sessionId) });
+            db.SaveChanges();
             HttpContext.Response.Cookies.Delete("sessionId");
             return RedirectToAction("Index", "Home");
             
