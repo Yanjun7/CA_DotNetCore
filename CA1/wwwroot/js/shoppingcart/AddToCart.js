@@ -236,15 +236,16 @@ function sendProductId_remove(productId) {
         if (this.readyState == XMLHttpRequest.DONE) {
             let data = JSON.parse(this.responseText)
             if (data.status == "success") {
-                let table = document.getElementById("table_" + data.id)
 
                 if (data.count == 0) {
                     window.location = data.url;
                 }
                 else {
-                    table.parentNode.removeChild(table);
+                    let tableList = document.getElementById("table_" + data.id);
+                    //for (let i = 1; i < 4; i++) {
+                        tableList.parentNode.removeChild(tableList);
+                    //}
                 }
-                
                 cartIcon();
                 total();
             }

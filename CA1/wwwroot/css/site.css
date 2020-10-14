@@ -81,3 +81,7 @@ body {
 .menu_hide {
     visibility: hidden;
 }
+
+#hello{
+    font-family:'Comic Sans MS';
+}

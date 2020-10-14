@@ -131,10 +131,10 @@
 
                 <td class="name">
                     @{
-                        string price = prices[i + j] + "-" + "Add" + " " + "To" + " " + "Cart";
+                        string price = prices[i + j].ToString("0.00");
                     }
 
-                    <button class="add_button" productId=@productId[i+j]>@price</button>
+                    <button class="add_button" productId=@productId[i+j]>$@price<br/>Add To Cart</button>
 
                 </td>
 

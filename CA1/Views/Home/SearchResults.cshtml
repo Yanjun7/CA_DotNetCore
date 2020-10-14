@@ -108,9 +108,9 @@
             {
 
                 <td class="name">
-                    @{ string price = products[i + j].Price + "-" + "Add" + " " + "To" + " " + "Cart"; }
+                    @{ string price = products[i + j].Price.ToString("0.00"); }
 
-                    <button class="add_button" productId=@products[i+j].Id>@price</button>
+                    <button class="add_button" productId=@products[i+j].Id>$@price<br/>Add To Cart</button>
 
                 </td>
             }

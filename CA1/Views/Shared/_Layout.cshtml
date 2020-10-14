@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="shoppingcart" style="float:right">
-                    <a href="/ShoppingCart/Index" style="text-decoration:none"> <img src="/img/shoppingcart.png" class="cart" width="30" /> <span id="cartIcon"></span> &emsp; </a>
+                    <a href="/ShoppingCart/Index" style="text-decoration:none"> <img src="/img/shoppingcart.png" class="cart" width="30" /> <span id="cartIcon" style="font-size:18px; font-family:'Comic Sans MS'; font-weight:bold"></span> &emsp; </a>
                 </div>
 
                 <div class="search_field" float="right">
@@ -58,7 +58,7 @@
         <main role="main" class="pb-3">
             @if ((bool)ViewData["IsLogin"] == true)
             {
-                <table>
+                <table id="hello">
                     <tr>
                         <th>Hello @ViewData["username"] | <a href="/History">My Purchases</a> <hr/> </th>
                     </tr>
